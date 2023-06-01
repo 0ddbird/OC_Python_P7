@@ -3,9 +3,7 @@ from utils import perf_timer
 
 
 @perf_timer
-def greedy(
-    items: list[Item, ...], max_weight: int, coeff: int
-) -> list[Item]:
+def greedy(items: list[Item, ...], max_weight: int, coeff: int) -> list[Item]:
     """
     Solve the 0/1 knapsack problem using a greedy approach.
 
@@ -15,7 +13,7 @@ def greedy(
     :type max_weight: int
     :return: A tuple containing the best combination of items as a list of
     strings and the maximum value as a float.
-    :rtype: Tuple[List[str], float]
+    :rtype: List[Item]
     """
     current_weight = 0
     best_combination = []

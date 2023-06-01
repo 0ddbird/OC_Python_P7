@@ -33,7 +33,7 @@ def dynamic_programming(
     :type max_weight: int
     :return: A tuple containing the best combination of items as a list
     of strings and the maximum value as a float.
-    :rtype: tuple[list[Item], float]
+    :rtype: list[Item]
     """
     getcontext().prec = 4
     n = len(items)

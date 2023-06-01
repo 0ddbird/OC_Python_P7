@@ -24,3 +24,4 @@ class ImplChoice(Enum):
     BruteForce = 1
     Greedy = 2
     Dynamic = 3
+    Genetic = 4

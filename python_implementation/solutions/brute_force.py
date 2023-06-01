@@ -6,9 +6,7 @@ from utils import perf_timer
 
 
 @perf_timer
-def brute_force(
-    items: List[Item], max_weight: int, coeff: int
-) -> List[Item]:
+def brute_force(items: List[Item], max_weight: int, coeff: int) -> List[Item]:
     """
     Solve the 0/1 knapsack problem using a brute force approach.
 
@@ -18,11 +16,11 @@ def brute_force(
     :type max_weight: int
     :return: A tuple containing the best combination of items as a list of
     strings and the maximum value as a float.
-    :rtype: Tuple[List[Item], float]
+    :rtype: List[Item]
     """
     if len(items) > 20:
         raise ValueError(
-            "Brute force solution can't be used " "with more than 20 items"
+            "Brute force solution can't be used with more than 20 items"
         )
     all_combinations = []
     for r in range(1, len(items) + 1):

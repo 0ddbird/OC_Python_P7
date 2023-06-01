@@ -125,9 +125,12 @@ def choose_implementation() -> ImplChoice:
                 return ImplChoice.Dynamic
             case "--greedy":
                 return ImplChoice.Greedy
+            case "--gen":
+                return ImplChoice.Genetic
             case _:
                 print(
                     "Error: Invalid solution option. "
-                    "Please use either '--bruteforce', '--dp' or '--greedy'."
+                    "Please use either '--bruteforce', '--dp', '--greedy',"
+                    " or '--gen'."
                 )
                 return None
