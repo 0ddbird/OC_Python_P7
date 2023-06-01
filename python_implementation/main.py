@@ -1,35 +1,44 @@
-from typehints import Action
-from bruteforce import bruteforce
-# from python_implementation.optimized import optimized_knapsack
-
-max_cost = 500
-
-actions: list[Action] = [
-    ("action_1", 20, 0.05),
-    ("action_2", 30, 0.1),
-    ("action_3", 50, 0.15),
-    ("action_4", 70, 0.2),
-    ("action_5", 60, 0.17),
-    ("action_6", 80, 0.25),
-    ("action_7", 22, 0.07),
-    ("action_8", 26, 0.11),
-    ("action_9", 48, 0.13),
-    ("action_10", 34, 0.27),
-    ("action_11", 42, 0.17),
-    ("action_12", 110, 0.09),
-    ("action_13", 38, 0.23),
-    ("action_14", 14, 0.01),
-    ("action_15", 18, 0.03),
-    ("action_16", 8, 0.08),
-    ("action_17", 4, 0.12),
-    ("action_18", 10, 0.14),
-    ("action_19", 24, 0.21),
-    ("action_20", 114, 0.18),
-]
+from models import ImplChoice
+from solutions.greedy import greedy
+from solutions.brute_force import brute_force
+from solutions.dynamic import dynamic_programming
+from utils import (
+    write_to_text,
+    get_file_name,
+    get_dataset_path,
+    get_export_path,
+    get_items_and_max_weight,
+    choose_implementation,
+)
 
 
-best_combination, total_value = bruteforce(actions, max_cost)
-print(best_combination, total_value)
+def main():
+    file_name = get_file_name()
+    dataset_path = get_dataset_path(file_name)
+    items, max_weight, coeff = get_items_and_max_weight(dataset_path)
+    solution = choose_implementation()
+    export_path = get_export_path(file_name, solution)
+    match solution:
+        case ImplChoice.BruteForce:
+            combination = brute_force(items, max_weight, coeff)
+        case ImplChoice.Greedy:
+            combination = greedy(items, max_weight, coeff)
+        case ImplChoice.Dynamic:
+            combination = dynamic_programming(items, max_weight, coeff)
+        case _:
+            combination = dynamic_programming(items, max_weight, coeff)
 
-# second_set = optimized_knapsack(actions, max_cost)
-# print(second_set)
+    def generate_export_data(combination, coeff):
+        for item in combination:
+            item.weight = item.weight / coeff
+            item.rate = item.rate * coeff
+
+        combination_value = float(sum(item.value for item in combination) / coeff)
+        return combination, combination_value
+
+    combination, value = generate_export_data(combination, coeff)
+    write_to_text(export_path, combination, value)
+
+
+if __name__ == "__main__":
+    main()

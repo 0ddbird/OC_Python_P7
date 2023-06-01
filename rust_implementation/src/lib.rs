@@ -1,3 +1,2 @@
 pub mod models;
-pub mod bruteforce;
-pub mod optimized;
+pub mod solutions;

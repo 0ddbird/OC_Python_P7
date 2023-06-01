@@ -1,0 +1,11 @@
+Best Combination:
+- Action-20, 1.14, 0.1800
+- Action-6, 0.8, 0.2500
+- Action-4, 0.7, 0.200
+- Action-5, 0.6, 0.1700
+- Action-12, 1.1, 0.0900
+- Action-10, 0.34, 0.2700
+- Action-19, 0.24, 0.2100
+- Action-16, 0.08, 0.0800
+Total cost: 500.0
+Profit: 89.48
