@@ -18,7 +18,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "rust_implementation"
+name = "src_rust"
 version = "0.1.0"
 dependencies = [
  "itertools",

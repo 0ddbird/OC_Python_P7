@@ -1,5 +1,5 @@
-use rust_implementation::models::Item;
-use rust_implementation::solutions::brute_force::brute_force;
+use src_rust::models::Item;
+use src_rust::brute_force::brute_force;
 
 fn main() {
     let max_weight = 500;

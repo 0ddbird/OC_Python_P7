@@ -1,8 +1,8 @@
 from models import ImplChoice
-from solutions.brute_force import brute_force
-from solutions.dynamic import dynamic_programming
-from solutions.genetic import genetic_algorithm
-from solutions.greedy import greedy
+from algorithms.brute_force import brute_force
+from algorithms.dynamic import dynamic_programming
+from algorithms.genetic import genetic_algorithm
+from algorithms.greedy import greedy
 
 from utils import (
     write_to_text,

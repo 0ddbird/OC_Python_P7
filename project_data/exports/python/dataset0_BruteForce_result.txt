@@ -10,4 +10,4 @@ Best Combination:
 - Action-19, 0.24, 0.2100
 - Action-20, 1.14, 0.1800
 Total cost: 498.0
-Profit: 99.08
+Profit: 0.9908

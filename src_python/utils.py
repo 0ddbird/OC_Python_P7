@@ -87,13 +87,16 @@ def get_file_name():
 def get_dataset_path(file_name):
     if file_name is None:
         return None
-    return f"../datasets/{file_name}.csv"
+    return f"../project_data/datasets/{file_name}.csv"
 
 
 def get_export_path(file_name: str, solution: ImplChoice):
     if file_name is None:
         return None
-    return f"../exports/python/{file_name}_{solution.name}_result.txt"
+    return (
+        f"../project_data/exports/python/{file_name}_{solution.name}_"
+        "result.txt"
+    )
 
 
 def get_max_weight():
