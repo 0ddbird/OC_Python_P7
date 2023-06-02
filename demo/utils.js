@@ -1,0 +1,56 @@
+import { state } from './state.js'
+
+const sleep = (ms) => new Promise((r) => setTimeout(r, ms))
+
+const waitForNext = () => {
+  return new Promise((resolve) => {
+    function onButtonClick(e) {
+      state.currentButton.removeEventListener('click', onButtonClick)
+      state.currentButton = null
+      state.currentListener = null
+      resolve()
+    }
+    if (state.currentButton && state.currentListener)
+      state.currentButton.removeEventListener('click', state.currentListener)
+
+    const forwardButton = document.getElementById('fwd')
+    forwardButton.addEventListener('click', onButtonClick)
+    state.currentListener = onButtonClick
+    state.currentButton = forwardButton
+  })
+}
+
+function resetDOMTable() {
+  const DOMTable = document.getElementById('table')
+  DOMTable.innerHTML = ''
+  if (state.currentButton && state.currentListener) {
+    state.currentButton.removeEventListener('click', state.currentListener)
+    state.currentListener = null
+    state.currentButton = null
+  }
+}
+
+function createDOMTable(table) {
+  const DOMTable = document.getElementById('table')
+  DOMTable.style.gridTemplateRows = `repeat(${table.length}, 1fr)`
+  let arrayIncr = 0
+
+  table.forEach((array) => {
+    const DOMArray = document.createElement('div')
+    DOMArray.classList.add('sub-array')
+    DOMArray.dataset.array = `${arrayIncr}`
+    DOMArray.style.gridTemplateColumns = `repeat(${array.length}, 1fr)`
+    DOMTable.append(DOMArray)
+    let cellIncr = 0
+    array.forEach((cell) => {
+      const DOMCell = document.createElement('div')
+      DOMCell.classList.add('cell')
+      DOMCell.dataset.cell = `${cellIncr}`
+      cellIncr += 1
+      DOMArray.append(DOMCell)
+    })
+    arrayIncr += 1
+  })
+}
+
+export { sleep, waitForNext, createDOMTable, resetDOMTable }

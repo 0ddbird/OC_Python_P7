@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link href="demo/style.css" rel="stylesheet" type="text/css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;700&display=swap"
+      rel="stylesheet"
+    />
+    <script src="demo/index.js" type="module" defer></script>
+    <script
+      src="https://kit.fontawesome.com/52b9d34509.js"
+      crossorigin="anonymous"
+    ></script>
+    <title>0/1 Knapsack problem</title>
+  </head>
+  <body>
+    <h1>Dynamic programming solution to the 0/1 Knapsack problem</h1>
+
+    <div class="wrapper">
+      <form id="weight-form">
+        <label for="weight-input">Max weight</label>
+        <input id="weight-input" type="number" min="1" max="24" value="11" />
+        <button type="submit">START</button>
+      </form>
+      <div id="items">
+        <div>
+          <div>Item</div>
+          <div>Weight</div>
+          <div>Value</div>
+        </div>
+      </div>
+      <div id="table"></div>
+      <div id="controls">
+        <button class="control-button" id="reset">
+          <img src="demo/assets/arrow_rotate.svg" alt="reset" />
+        </button>
+        <button class="control-button" id="fwd">
+          <img id="fwd-icon" src="demo/assets/fwd.svg" alt="forward" />
+          <img
+            id="play-icon"
+            src="demo/assets/play.svg"
+            alt="play"
+            class="hidden"
+          />
+        </button>
+        <button class="control-button" id="ffwd">
+          <img src="demo/assets/ffwd.svg" alt="fast_forward" />
+        </button>
+      </div>
+    </div>
+    <div id="banner">
+      <div class="worksite"></div>
+      <h2>Work in progress</h2>
+      <div class="worksite"></div>
+    </div>
+  </body>
+</html>
