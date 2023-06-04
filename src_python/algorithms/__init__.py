@@ -1,4 +1,4 @@
-from models import Item, Combination
+from models import Combination, Item
 
 
 def compute(algorithm, items: list[Item, ...], max_weight: int) -> Combination:

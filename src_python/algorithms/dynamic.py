@@ -1,4 +1,4 @@
-from models import Item, Combination, Algorithm
+from models import Algorithm, Combination, Item
 from utils.profiling import perf_timer
 
 

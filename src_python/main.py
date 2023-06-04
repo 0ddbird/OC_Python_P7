@@ -5,7 +5,6 @@ from utils.factory import get_cleaned_items
 from utils.input import get_params
 from utils.output import write_to_text
 
-
 getcontext().prec = 6
 
 

@@ -1,6 +1,6 @@
 import os
 
-from models import Combination, Algorithm
+from models import Algorithm, Combination
 
 
 def write_to_text(

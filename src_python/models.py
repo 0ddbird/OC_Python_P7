@@ -1,5 +1,5 @@
-from decimal import Decimal
 from abc import ABC, abstractmethod
+from decimal import Decimal
 
 
 class Item:

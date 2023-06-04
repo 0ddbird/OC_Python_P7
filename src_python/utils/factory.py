@@ -1,6 +1,7 @@
 import csv
-from _decimal import Decimal
 from pathlib import Path
+
+from _decimal import Decimal
 
 from models import Item
 
