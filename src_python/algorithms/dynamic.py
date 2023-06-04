@@ -8,17 +8,17 @@ class Dynamic(Algorithm):
         return "dynamic"
 
     @perf_timer
-    def compute(self, items: list[Item], max_weight: int) -> Combination:
+    def compute(self, items: list[Item], capacity: int) -> Combination:
         coefficient = items[0].coefficient
-        max_weighted_weight = max_weight * coefficient
+        weighted_capacity = capacity * coefficient
 
         table = [
-            [0 for w in range(max_weighted_weight + 1)]
+            [0 for w in range(weighted_capacity + 1)]
             for i in range(len(items) + 1)
         ]
 
         for i in range(len(items) + 1):
-            for w in range(max_weighted_weight + 1):
+            for w in range(weighted_capacity + 1):
                 if i == 0 or w == 0:
                     table[i][w] = 0
                 elif items[i - 1].weighted_weight <= w:
@@ -30,10 +30,10 @@ class Dynamic(Algorithm):
                 else:
                     table[i][w] = table[i - 1][w]
 
-        max_value = table[len(items)][max_weighted_weight]
+        max_value = table[len(items)][weighted_capacity]
 
         knapsack_items = []
-        w = max_weighted_weight
+        w = weighted_capacity
 
         for i in range(len(items), 0, -1):
             if max_value <= 0:

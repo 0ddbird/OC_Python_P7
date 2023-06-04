@@ -1,6 +1,7 @@
 # OpenClassrooms - Python certification - Project #7
 
 ## Introduction
+
 Algorithm Project : the objective of this project is to implement 2 algorithms to solve the Knapsack problem.
 
 ## Part 1: Brute Force Solution

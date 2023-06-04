@@ -22,10 +22,10 @@ class Item:
         )
 
     def __repr__(self):
-        return f"Item({self.name=}, {self.weight=}, {self.value=})"
+        return f"Item({self.name=}, {self.weight=}, {self.rate=})"
 
     def __str__(self):
-        return f"{self.name}, {self.weight}, {self.value}"
+        return f"{self.name}, {self.weight}, {self.rate}, {self.value}"
 
 
 class Combination:

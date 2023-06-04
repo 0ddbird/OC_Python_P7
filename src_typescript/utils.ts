@@ -1,42 +1,49 @@
 import { state } from './state.js'
+import { type State } from './models.js'
 
-const sleep = (ms) => new Promise((r) => setTimeout(r, ms))
+const sleep = async (ms: number): Promise<void> => {
+  await new Promise((resolve) => setTimeout(resolve, ms))
+}
 
-const waitForNext = () => {
-  return new Promise((resolve) => {
-    function onButtonClick(e) {
-      state.currentButton.removeEventListener('click', onButtonClick)
+const waitForNext = async (): Promise<void> => {
+  await new Promise<void>((resolve) => {
+    function onButtonClick (e: MouseEvent): void {
+      state.currentButton?.removeEventListener('click', onButtonClick)
       state.currentButton = null
       state.currentListener = null
       resolve()
     }
-    if (state.currentButton && state.currentListener)
-      state.currentButton.removeEventListener('click', state.currentListener)
 
-    const forwardButton = document.getElementById('fwd')
+    if (state.currentButton != null && state.currentListener != null) {
+      state.currentButton.removeEventListener('click', state.currentListener)
+    }
+
+    const forwardButton = document.getElementById('fwd') as HTMLButtonElement
     forwardButton.addEventListener('click', onButtonClick)
     state.currentListener = onButtonClick
     state.currentButton = forwardButton
   })
 }
 
-function resetDOMTable() {
-  const DOMTable = document.getElementById('table')
+function resetDOMTable (state: State): void {
+  const DOMTable = document.getElementById('table') as HTMLDivElement
   DOMTable.innerHTML = ''
-  if (state.currentButton && state.currentListener) {
+  if (state.currentButton != null && state.currentListener != null) {
     state.currentButton.removeEventListener('click', state.currentListener)
     state.currentListener = null
     state.currentButton = null
   }
 }
 
-function createDOMTable(table, maxWeight) {
-  const DOMTable = document.getElementById('table')
-  const DOMTableHeader = document.getElementById('table-header')
+function createDOMTable (table: any[][], maxWeight: number): void {
+  const DOMTable = document.getElementById('table') as HTMLDivElement
+  const DOMTableHeader = document.getElementById(
+    'table-header'
+  ) as HTMLDivElement
   DOMTableHeader.style.gridTemplateColumns = `repeat(${maxWeight}, 1fr)`
   DOMTable.style.gridTemplateRows = `repeat(${table.length}, 1fr)`
 
-  for (let i = 0; i < maxWeight ; i++) {
+  for (let i = 0; i < maxWeight; i++) {
     const headerCell = document.createElement('div')
     headerCell.classList.add('header-cell')
     headerCell.textContent = `${i}`
