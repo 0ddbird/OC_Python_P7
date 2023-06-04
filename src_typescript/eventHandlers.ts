@@ -1,7 +1,7 @@
 import { dynamicProgramming } from './algorithm.js'
 import { items } from './demo_data.js'
 import { state } from './state.js'
-import { resetDOMTable } from './utils.js'
+import { resetDOMTable } from './dom.js'
 
 async function handleFastForward (e: MouseEvent): Promise<void> {
   const ffwdButton = document.getElementById('ffwd') as HTMLButtonElement
@@ -14,27 +14,13 @@ async function handleFastForward (e: MouseEvent): Promise<void> {
   state.play = !state.play
 }
 
-function handleFastForwardWrapper (e: MouseEvent): void {
-  handleFastForward(e).catch((error) => {
-    console.error('An error occurred in handleFastForward:', error)
-  })
-}
-
 async function handleStart (e: SubmitEvent): Promise<void> {
   e.preventDefault()
   resetDOMTable(state)
   state.inProgress = true
-  const weightInput = document.getElementById(
-    'weight-input'
-  ) as HTMLInputElement
+  const weightInput = document.getElementById('weight-input') as HTMLInputElement
   const maxWeight = parseInt(weightInput.value)
   await dynamicProgramming(items, maxWeight)
-}
-
-const handleStartWrapper = (e: SubmitEvent): void => {
-  handleStart(e).catch((error) => {
-    console.error('An error occurred in handleStart:', error)
-  })
 }
 
 async function handleReset (e: MouseEvent): Promise<void> {
@@ -49,10 +35,16 @@ async function handleReset (e: MouseEvent): Promise<void> {
   await dynamicProgramming(items, maxWeight)
 }
 
+function handleFastForwardWrapper (e: MouseEvent): void {
+  handleFastForward(e).catch((error) => { console.error('An error occurred in handleFastForward:', error) })
+}
+
+const handleStartWrapper = (e: SubmitEvent): void => {
+  handleStart(e).catch((error) => { console.error('An error occurred in handleStart:', error) })
+}
+
 const handleResetWrapper = (e: MouseEvent): void => {
-  handleReset(e).catch((error) => {
-    console.error('An error occurred in handleReset:', error)
-  })
+  handleReset(e).catch((error) => { console.error('An error occurred in handleReset:', error) })
 }
 
 export { handleStartWrapper, handleResetWrapper, handleFastForwardWrapper }

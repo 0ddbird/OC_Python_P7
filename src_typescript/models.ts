@@ -2,7 +2,7 @@ class Item {
   constructor (public weight: number, public value: number) {}
 }
 
-interface State {
+interface IState {
   currentButton: HTMLButtonElement | null
   currentListener: ((e: MouseEvent) => void) | null
   inProgress: boolean
@@ -10,4 +10,4 @@ interface State {
   play: boolean
 }
 
-export { Item, type State }
+export { Item, type IState }

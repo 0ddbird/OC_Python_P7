@@ -1,7 +1,7 @@
 import { dynamicProgramming } from './algorithm.js';
 import { items } from './demo_data.js';
 import { state } from './state.js';
-import { resetDOMTable } from './utils.js';
+import { resetDOMTable } from './dom.js';
 async function handleFastForward(e) {
     const ffwdButton = document.getElementById('ffwd');
     const fwdIcon = document.getElementById('fwd-icon');
@@ -11,11 +11,6 @@ async function handleFastForward(e) {
     ffwdButton.classList.toggle('pressed');
     state.play = !state.play;
 }
-function handleFastForwardWrapper(e) {
-    handleFastForward(e).catch((error) => {
-        console.error('An error occurred in handleFastForward:', error);
-    });
-}
 async function handleStart(e) {
     e.preventDefault();
     resetDOMTable(state);
@@ -24,11 +19,6 @@ async function handleStart(e) {
     const maxWeight = parseInt(weightInput.value);
     await dynamicProgramming(items, maxWeight);
 }
-const handleStartWrapper = (e) => {
-    handleStart(e).catch((error) => {
-        console.error('An error occurred in handleStart:', error);
-    });
-};
 async function handleReset(e) {
     if (state.resetInProgress)
         return;
@@ -39,9 +29,13 @@ async function handleReset(e) {
     const maxWeight = parseInt(weightInput.value);
     await dynamicProgramming(items, maxWeight);
 }
+function handleFastForwardWrapper(e) {
+    handleFastForward(e).catch((error) => { console.error('An error occurred in handleFastForward:', error); });
+}
+const handleStartWrapper = (e) => {
+    handleStart(e).catch((error) => { console.error('An error occurred in handleStart:', error); });
+};
 const handleResetWrapper = (e) => {
-    handleReset(e).catch((error) => {
-        console.error('An error occurred in handleReset:', error);
-    });
+    handleReset(e).catch((error) => { console.error('An error occurred in handleReset:', error); });
 };
 export { handleStartWrapper, handleResetWrapper, handleFastForwardWrapper };

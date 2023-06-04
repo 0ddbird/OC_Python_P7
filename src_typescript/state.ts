@@ -1,6 +1,6 @@
-import { type State } from './models.js'
+import { type IState } from './models.js'
 
-export const state: State = {
+export const state: IState = {
   currentButton: null,
   currentListener: null,
   inProgress: false,

@@ -1,12 +1,6 @@
-import { createDOMTable, sleep, waitForNext } from './utils.js';
+import { sleep, waitForNext } from './utils.js';
 import { state } from './state.js';
-import { DOMCell } from './dom.js';
-function selectDOMCell(row, cell) {
-    const DOMTable = document.getElementById('table');
-    const DOMSubArray = DOMTable.querySelector(`[data-array="${row}"]`);
-    const DOMCell = DOMSubArray.querySelector(`[data-cell="${cell}"]`);
-    return DOMCell;
-}
+import { createDOMTable, DOMCell, selectDOMCell } from './dom.js';
 export async function dynamicProgramming(items, capacity) {
     const table = Array(items.length + 1)
         .fill(0)

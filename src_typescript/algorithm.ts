@@ -1,18 +1,7 @@
-import { createDOMTable, sleep, waitForNext } from './utils.js'
+import { sleep, waitForNext } from './utils.js'
 import { state } from './state.js'
-import { DOMCell } from './dom.js'
+import { createDOMTable, DOMCell, selectDOMCell } from './dom.js'
 import { type Item } from './models.js'
-
-function selectDOMCell (row: number, cell: number): HTMLDivElement {
-  const DOMTable = document.getElementById('table') as HTMLDivElement
-  const DOMSubArray = DOMTable.querySelector(
-    `[data-array="${row}"]`
-  ) as HTMLDivElement
-  const DOMCell = DOMSubArray.querySelector(
-    `[data-cell="${cell}"]`
-  ) as HTMLDivElement
-  return DOMCell
-}
 
 export async function dynamicProgramming (
   items: Item[],
