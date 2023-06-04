@@ -1,27 +1,53 @@
-from decimal import Decimal, getcontext
-from enum import Enum
-
-getcontext().prec = 4
+from decimal import Decimal
+from abc import ABC, abstractmethod
 
 
 class Item:
-    def __init__(self, name: str, weight: int, rate: Decimal):
+    def __init__(
+        self,
+        name: str,
+        weight: Decimal,
+        rate: Decimal,
+        coefficient: int,
+    ):
         self.name: str = name
-        self.weight: int = weight
-        self.rate: Decimal = Decimal(str(rate))
-        self.value: Decimal = Decimal(self.weight) * self.rate
-
-    def __repr__(self):
-        return (
-            f"Item({self.name=}, {self.weight=}, {self.rate=}, {self.value=})"
+        self.weight: Decimal = weight
+        self.rate: Decimal = rate / 100
+        self.value: Decimal = weight * self.rate
+        self.coefficient: int = coefficient
+        self.weighted_weight: int = int(weight * coefficient)
+        self.weighted_rate: int = int(rate * coefficient)
+        self.weighted_value: int = int(
+            self.weighted_weight * self.weighted_rate
         )
 
+    def __repr__(self):
+        return f"Item({self.name=}, {self.weight=}, {self.value=})"
+
     def __str__(self):
-        return f"{self.name}, {self.weight / 100}, {self.rate}"
+        return f"{self.name}, {self.weight}, {self.value}"
 
 
-class ImplChoice(Enum):
-    BruteForce = 1
-    Greedy = 2
-    Dynamic = 3
-    Genetic = 4
+class Combination:
+    def __init__(self, items: list[Item]):
+        self.items = items
+
+    @property
+    def weight(self):
+        return f"{sum(item.weight for item in self.items)}"
+
+    @property
+    def value(self):
+        total_value = sum(item.value for item in self.items)
+        return "{:.2f}".format(total_value)
+
+
+class Algorithm(ABC):
+    @property
+    @abstractmethod
+    def name(self):
+        raise NotImplementedError
+
+    @abstractmethod
+    def compute(self, items: list[Item], max_weight: int) -> Combination:
+        raise NotImplementedError

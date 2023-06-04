@@ -1,0 +1,23 @@
+Combination:
+- Share-ECAQ, 31.66, 12.5025
+- Share-IXCI, 26.32, 10.3701
+- Share-FWBE, 18.31, 7.29104
+- Share-ZOFA, 25.32, 10.0723
+- Share-PLLK, 19.94, 7.95805
+- Share-LXZU, 4.24, 1.67650
+- Share-YFVZ, 22.55, 8.81705
+- Share-ANFX, 38.55, 15.3121
+- Share-PATS, 27.7, 11.0717
+- Share-SCWM, 6.42, 2.44602
+- Share-NDKR, 33.06, 13.1942
+- Share-ALIY, 29.08, 11.6116
+- Share-JWGF, 48.69, 19.4419
+- Share-JGTW, 35.29, 13.9148
+- Share-FAPS, 32.57, 12.8782
+- Share-VCAX, 27.42, 10.6911
+- Share-LFXB, 14.83, 5.90086
+- Share-DWSK, 29.49, 11.6043
+- Share-XQII, 13.42, 5.30224
+- Share-ROOM, 15.06, 5.90804
+Total cost: 499.92
+Profit: 197.96

@@ -1,0 +1,17 @@
+Combination:
+- Share-JWGF, 48.69, 19.4419
+- Share-MBQU, 51.46, 18.4124
+- Share-QEVK, 49.77, 17.1109
+- Share-DLNE, 44.06, 16.1876
+- Share-IJFT, 40.91, 15.9099
+- Share-ANFX, 38.55, 15.3121
+- Share-MALJ, 46.37, 15.2465
+- Share-OPBR, 39.0, 15.1905
+- Share-FWMV, 41.68, 14.9214
+- Share-HATC, 43.45, 14.8338
+- Share-XGNC, 41.86, 14.7096
+- Share-XQII, 13.42, 5.30224
+- Share-DYVD, 0.28, 0.028700
+- Share-LKSD, 0.12, 0.010968
+Total cost: 499.62
+Profit: 182.62

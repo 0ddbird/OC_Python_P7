@@ -1,11 +1,12 @@
-from models import Item
-from utils import perf_timer
+from models import Item, Combination, Algorithm
+from utils.profiling import perf_timer
 
 
-@perf_timer
-def genetic_algorithm(
-    items: list[Item],
-    max_weight: int,
-    coeff: int,
-) -> list[Item]:
-    raise NotImplementedError
+class Genetic(Algorithm):
+    @property
+    def name(self):
+        return "genetic"
+
+    @perf_timer
+    def compute(self, items: list[Item], max_weight: int) -> Combination:
+        raise NotImplementedError

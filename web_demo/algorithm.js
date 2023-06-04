@@ -22,10 +22,11 @@ export async function dynamicProgramming(items, maxWeight) {
   const table = Array.from(Array(n), () => new Array(maxWeight + 1).fill(0))
   const keep = Array.from(Array(n), () => new Array(maxWeight + 1).fill(0))
 
-  createDOMTable(table)
+  createDOMTable(table, maxWeight)
 
   for (let i = 0; i < n; i++) {
     for (let currMaxWeight = 0; currMaxWeight <= maxWeight; currMaxWeight++) {
+      console.log(`[${i}][${i}]`)
       const DOMTable = document.getElementById('table')
       const DOMSubArray = DOMTable.querySelector(`[data-array="${i}"]`)
       const DOMCell = DOMSubArray.querySelector(

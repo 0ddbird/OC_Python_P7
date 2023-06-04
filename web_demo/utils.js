@@ -30,9 +30,18 @@ function resetDOMTable() {
   }
 }
 
-function createDOMTable(table) {
+function createDOMTable(table, maxWeight) {
   const DOMTable = document.getElementById('table')
+  const DOMTableHeader = document.getElementById('table-header')
+  DOMTableHeader.style.gridTemplateColumns = `repeat(${maxWeight}, 1fr)`
   DOMTable.style.gridTemplateRows = `repeat(${table.length}, 1fr)`
+
+  for (let i = 0; i < maxWeight ; i++) {
+    const headerCell = document.createElement('div')
+    headerCell.classList.add('header-cell')
+    headerCell.textContent = `${i}`
+    DOMTableHeader.append(headerCell)
+  }
   let arrayIncr = 0
 
   table.forEach((array) => {

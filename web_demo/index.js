@@ -17,7 +17,7 @@ items.forEach((item, index) => {
 
   const nameDiv = document.createElement('div')
   nameDiv.className = 'item-number'
-  nameDiv.textContent = `Item ${index}`
+  nameDiv.textContent = `Item ${index + 1}`
 
   const weightDiv = document.createElement('div')
   weightDiv.className = 'item-weight'
