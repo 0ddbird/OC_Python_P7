@@ -18,3 +18,7 @@ It is also required to provide a set of slides containing the following:
 - A diagram, flowchart, or pseudocode describing the thought process behind the optimized solution.
 - The algorithm chosen for the optimized version and the algorithm's limitations (edge cases).
 - A comparison of the efficiency and performance of the brute force algorithm versus the optimized algorithm using Big-O notation, time complexity, and memory analysis.
+
+## Links
+
+[Project diagram](https://whimsical.com/BzsL865mDueuqFBd5RSfjU)

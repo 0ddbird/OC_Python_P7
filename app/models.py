@@ -12,7 +12,7 @@ class Item:
     ):
         self.name: str = name
         self.weight: Decimal = weight
-        self.rate: Decimal = rate / 100
+        self.rate: Decimal = rate / coefficient
         self.value: Decimal = weight * self.rate
         self.coefficient: int = coefficient
         self.weighted_weight: int = int(weight * coefficient)

@@ -2,6 +2,9 @@
 use src_rust::dp::dynamic;
 use src_rust::models::Item;
 use src_rust::utils::{get_coefficient, item_factory};
+use crate::dp::dynamic;
+use crate::models::Item;
+use crate::utils::{get_coefficient, item_factory};
 
 fn main() {
     let capacity: i32 = 500;
