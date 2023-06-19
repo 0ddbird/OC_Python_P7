@@ -2,8 +2,10 @@ use itertools::Itertools;
 use crate::models::{Item};
 use std::cmp::Ordering;
 use rust_decimal::Decimal;
+use pyo3::{pyfunction, PyResult};
 
-pub fn brute_force(items: &[Item], capacity: i32) -> Vec<&Item> {
+#[pyfunction]
+pub fn brute_force(items: &[Item], capacity: i32) -> PyResult<Vec<&Item>> {
     let mut all_combinations:Vec<Vec<&Item>> = vec![];
     for i in 1..=items.len() {
         let combinations: Vec<Vec<&Item>> = items.iter().combinations(i).collect();
@@ -30,5 +32,5 @@ pub fn brute_force(items: &[Item], capacity: i32) -> Vec<&Item> {
         vec![]
     };
 
-    best_combination
+    Ok(best_combination)
 }

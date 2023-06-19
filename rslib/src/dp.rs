@@ -1,8 +1,9 @@
+use pyo3::{pyfunction, PyResult};
 use crate::models::Item;
 use std::cmp;
 
-pub fn dynamic(items: &[Item], capacity: i32) -> Vec<&Item> {
-
+#[pyfunction]
+pub fn dynamic(items: &[Item], capacity: i32) -> PyResult<Vec<&Item>> {
     let coefficient: i32 = items[0].coefficient;
     let weighted_capacity: i32 = capacity * coefficient;
     let mut table:Vec<Vec<i32>> = vec![vec![0; weighted_capacity as usize + 1]; items.len() + 1];
@@ -31,6 +32,6 @@ pub fn dynamic(items: &[Item], capacity: i32) -> Vec<&Item> {
         }
     }
 
-    knapsack_items
+    Ok(knapsack_items)
 }
 
