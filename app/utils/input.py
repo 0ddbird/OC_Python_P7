@@ -5,7 +5,7 @@ from pathlib import Path
 from algorithms.brute_force import BruteForce
 from algorithms.dynamic import Dynamic
 from algorithms.greedy import Greedy
-from models import Algorithm
+from models import Algorithm, LangChoice
 
 
 def validate_args_count(args: list[str]) -> None:
@@ -36,41 +36,51 @@ def get_max_weight(max_weight_arg: str) -> int:
         exit(1)
 
 
-def get_implementation(implementation_arg: str) -> Algorithm:
-    if implementation_arg not in ["bruteforce", "dp", "greedy"]:
-        print(
-            f"{implementation_arg} is not a valid choice\n"
-            f"Choices: bruteforce | dp | greedy"
-        )
+def get_algorithm(algo_arg: str) -> Algorithm:
+    if algo_arg not in ["--bf", "--dp", "--gr"]:
+        print(f"{algo_arg} is not a valid choice\n" f"Choices: --bf | --dp | --gr")
         exit(1)
+    return algo_arg
 
-    match implementation_arg:
-        case "bruteforce":
-            return BruteForce()
-        case "dp":
-            return Dynamic()
-        case "greedy":
-            return Greedy()
-        case _:
-            return Dynamic()
+
+def get_lang(lang) -> LangChoice:
+    try:
+        return LangChoice(lang)
+    except ValueError:
+        print(f"{lang} is not a valid choice\n" f"Choices: --py | --rs")
+        exit(1)
 
 
 def get_optional_flags(args: list[str]) -> bool:
+    write = False
+    log = False
     if "-w" in args:
-        return True
-    return False
+        write = True
+    if "-p" in args:
+        log = True
+    return write, log
+
+
+def get_implementation(algo, lang_choice):
+    match algo:
+        case "--bf":
+            return BruteForce(lang_choice)
+        case "--dp":
+            return Dynamic(lang_choice)
+        case "--gr":
+            return Greedy(lang_choice)
+        case _:
+            return Dynamic(lang_choice)
 
 
 def get_params() -> tuple[str, Path, int, Algorithm, bool]:
     validate_args_count(sys.argv)
-
-    filename = sys.argv[1]
-    max_weight = sys.argv[2]
-    implementation_arg = sys.argv[3]
-
+    (_, filename, capacity, algo, lang, *remaining) = sys.argv
     path = get_dataset_path(filename)
-    max_weight = get_max_weight(max_weight)
-    implementation = get_implementation(implementation_arg)
-    write = get_optional_flags(sys.argv)
+    capacity = get_max_weight(capacity)
+    algo = get_algorithm(algo)
+    lang = get_lang(lang)
+    implementation = get_implementation(algo, lang)
+    write, log = get_optional_flags(remaining)
 
-    return filename, path, max_weight, implementation, write
+    return filename, path, capacity, lang, implementation, write, log

@@ -5,16 +5,15 @@ from utils.profiling import perf_timer
 class Dynamic(Algorithm):
     @property
     def name(self):
-        return "dynamic"
+        return f"Dynamic programming - {self.lang.name}"
 
     @perf_timer
-    def compute(self, items: list[Item], capacity: int) -> Combination:
+    def py_compute(self, items: list[Item], capacity: int) -> Combination:
         coefficient = items[0].coefficient
         weighted_capacity = capacity * coefficient
 
         table = [
-            [0 for w in range(weighted_capacity + 1)]
-            for i in range(len(items) + 1)
+            [0 for w in range(weighted_capacity + 1)] for i in range(len(items) + 1)
         ]
 
         for i in range(len(items) + 1):
@@ -47,3 +46,7 @@ class Dynamic(Algorithm):
                 w = w - items[i - 1].weighted_weight
 
         return Combination(knapsack_items)
+
+    @perf_timer
+    def rs_compute(self, items: dict[Item], capacity: int) -> Combination:
+        pass

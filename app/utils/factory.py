@@ -25,42 +25,33 @@ def get_coefficient(raw_items: list) -> int:
     return 10**dec_places
 
 
-def read_from_csv(file_path: Path) -> list[list[str, str, str]]:
+def read_from_csv(file_path: Path, coeff=False) -> list[tuple[str, str, str]]:
     with open(file_path, "r") as f:
         reader = csv.reader(f)
         next(reader)
-        raw_items = [row for row in reader]
-        coefficient = get_coefficient(raw_items)
+        raw_items = [tuple(row) for row in reader]
+        if coeff:
+            coefficient = get_coefficient(raw_items)
+            return raw_items, coefficient
+        return raw_items
 
-    return raw_items, coefficient
 
-
-def item_factory(
-    raw_items: list[list[str, str, str]], coefficient: int
-) -> list[Item]:
+def build_items(raw_items: list[tuple[str, str, str]], coefficient: int) -> list[Item]:
     items = []
 
     for item in raw_items:
-        name, weight, rate = item
+        name, weight, value = item
         weight = Decimal(weight)
-        rate = Decimal(rate)
+        value = Decimal(value)
 
-        if weight <= 0 or rate <= 0:
+        if weight <= 0 or value <= 0:
             print(
                 f"Excluding invalid item: {name}. "
                 "Please make sure the weight and rate are positive values."
             )
             continue
 
-        item = Item(
-            name=name, weight=weight, rate=rate, coefficient=coefficient
-        )
+        item = Item(name=name, weight=weight, value=value, coefficient=coefficient)
         items.append(item)
 
-    return items
-
-
-def get_cleaned_items(path: Path) -> list[Item, ...]:
-    raw_items, coefficient = read_from_csv(path)
-    items = item_factory(raw_items, coefficient)
     return items

@@ -8,9 +8,7 @@ def perf_timer(func):
         start_time = time.perf_counter()
         result = func(*args, **kwargs)
         end_time = time.perf_counter()
-        print(
-            f"{func.__name__} execution time: {end_time - start_time} seconds"
-        )
+        print(f"{func.__name__} execution time: {end_time - start_time} seconds")
         return result
 
     return wrapper
