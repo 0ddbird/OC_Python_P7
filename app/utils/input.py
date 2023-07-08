@@ -12,7 +12,7 @@ def validate_args_count(args: list[str]) -> None:
     if len(args) < 3:
         print(
             "Usage: python main.py <dataset_file_name> "
-            "<max_weight> [bruteforce | dp | greedy]"
+            "<max_weight> [bf | dp | greedy]"
         )
         exit(1)
 
@@ -37,8 +37,8 @@ def get_max_weight(max_weight_arg: str) -> int:
 
 
 def get_algorithm(algo_arg: str) -> Algorithm:
-    if algo_arg not in ["--bf", "--dp", "--gr"]:
-        print(f"{algo_arg} is not a valid choice\n" f"Choices: --bf | --dp | --gr")
+    if algo_arg not in ["bf", "dp", "gr"]:
+        print(f"{algo_arg} is not a valid choice\n" f"Choices: bf | dp | gr")
         exit(1)
     return algo_arg
 
@@ -63,11 +63,11 @@ def get_optional_flags(args: list[str]) -> bool:
 
 def get_implementation(algo, lang_choice):
     match algo:
-        case "--bf":
+        case "bf":
             return BruteForce(lang_choice)
-        case "--dp":
+        case "dp":
             return Dynamic(lang_choice)
-        case "--gr":
+        case "gr":
             return Greedy(lang_choice)
         case _:
             return Dynamic(lang_choice)

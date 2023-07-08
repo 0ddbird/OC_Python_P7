@@ -3,7 +3,7 @@ use pyo3::prelude::*;
 use pyo3::types::PyList;
 
 #[pyfunction]
-pub fn print_items(py_items: &PyList) -> PyResult<()> {
+pub fn rs_print_items(py_items: &PyList) -> PyResult<()> {
     let mut items = vec![];
     for py_item in py_items {
         let item = Item::extract(py_item)?;

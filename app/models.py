@@ -2,6 +2,8 @@ from abc import ABC, abstractmethod
 from decimal import Decimal
 from enum import Enum
 from typing import Union
+from knapsack_rs.knapsack_rs import Item as RsItem
+from knapsack_rs.knapsack_rs import Combination as RsCombination
 
 
 class Item:
@@ -9,15 +11,17 @@ class Item:
         self,
         name: str,
         weight: Decimal,
-        value: Decimal,
+        rate: Decimal,
         coefficient: int,
     ):
         self.name: str = name
         self.weight: Decimal = weight
-        self.value: Decimal = value
+        self.rate: Decimal = rate
+        self.value: Decimal = self.weight * self.rate / 100
         self.coefficient: int = coefficient
         self.weighted_weight: int = int(weight * coefficient)
-        self.weighted_rate: int = int(value * coefficient)
+        self.weighted_rate: int = int(rate * Decimal(coefficient))
+        self.weighted_value: int = int(self.weighted_weight * self.weighted_rate)
 
     def __repr__(self):
         return f"Item({self.name=}, {self.weight=}, {self.value=})"
@@ -37,7 +41,7 @@ class Combination:
     @property
     def value(self):
         total_value = sum(item.value for item in self.items)
-        return "{:.2f}".format(total_value)
+        return "{:.6f}".format(total_value)
 
     def __str__(self):
         return "\n".join(str(item) for item in self.items)
@@ -58,7 +62,7 @@ class Algorithm(ABC):
         raise NotImplementedError
 
     def compute(
-        self, items: Union[list[Item], list[dict]], capacity: int
+        self, items: Union[list[Item], list[RsItem]], capacity: int
     ) -> Combination:
         if self.lang == LangChoice.Python:
             return self.py_compute(items, capacity)
@@ -66,7 +70,7 @@ class Algorithm(ABC):
             return self.rs_compute(items, capacity)
 
     @abstractmethod
-    def rs_compute(self, items: list[dict], capacity: int) -> Combination:
+    def rs_compute(self, items: list[RsItem], capacity: int) -> RsCombination:
         raise NotImplementedError
 
     @abstractmethod

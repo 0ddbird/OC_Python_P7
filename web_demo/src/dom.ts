@@ -59,10 +59,10 @@ function resetDOMTable (state: IState): void {
 function createDOMTable (table: any[][], maxWeight: number): void {
   const DOMTable = document.getElementById('table') as HTMLDivElement
   const DOMTableHeader = document.getElementById('table-header') as HTMLDivElement
-  DOMTableHeader.style.gridTemplateColumns = `repeat(${maxWeight}, 1fr)`
+  DOMTableHeader.style.gridTemplateColumns = `repeat(${maxWeight + 1}, 1fr)`
   DOMTable.style.gridTemplateRows = `repeat(${table.length}, 1fr)`
 
-  for (let i = 0; i < maxWeight; i++) {
+  for (let i = 0; i < maxWeight + 1; i++) {
     const headerCell = document.createElement('div')
     headerCell.classList.add('header-cell')
     headerCell.textContent = `${i}`
@@ -81,6 +81,7 @@ function createDOMTable (table: any[][], maxWeight: number): void {
       const DOMCell = document.createElement('div')
       DOMCell.classList.add('cell')
       DOMCell.dataset.cell = `${cellIncr}`
+      DOMCell.innerText = '0'
       cellIncr += 1
       DOMArray.append(DOMCell)
     })

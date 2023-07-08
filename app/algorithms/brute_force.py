@@ -1,7 +1,24 @@
-import itertools
-from models import Algorithm, Combination, Item
+from models import Algorithm, Combination, Item as PyItem
 from utils.profiling import perf_timer
-from src_rust_lib import brute_force
+from knapsack_rs.knapsack_rs import (
+    rs_brute_force,
+    Item as RsItem,
+    Combination as RsCombination,
+)
+
+
+def get_all_combinations(items):
+    n = len(items)
+    combinations = []
+
+    for i in range(1, 2**n):  # Start from 1 to exclude the empty set
+        combination = []
+        for j in range(n):
+            if ((i >> j) & 1) == 1:  # Check if jth bit of i is set
+                combination.append(items[j])
+        combinations.append(combination)
+
+    return combinations
 
 
 class BruteForce(Algorithm):
@@ -10,17 +27,13 @@ class BruteForce(Algorithm):
         return f"brute_force - {self.lang.name}"
 
     @perf_timer
-    def py_compute(self, items: list[Item], capacity: int) -> Combination:
+    def py_compute(self, items: list[PyItem], capacity: int) -> Combination:
         if len(items) > 20:
             raise ValueError(
                 "Brute force solution can't be used with more than 20 items"
             )
 
-        # Faire les combinaisons à la main
-        all_combinations = []
-        for r in range(1, len(items) + 1):
-            combinations_object = itertools.combinations(items, r)
-            all_combinations += combinations_object
+        all_combinations = get_all_combinations(items)
 
         possible_solutions = []
         for combination in all_combinations:
@@ -38,5 +51,5 @@ class BruteForce(Algorithm):
         return Combination(best_list)
 
     @perf_timer
-    def rs_compute(self, items: list[dict], capacity: int) -> Combination:
-        return brute_force(items, capacity)
+    def rs_compute(self, items: list[RsItem], capacity: int) -> RsCombination:
+        return rs_brute_force(items, capacity)

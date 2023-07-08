@@ -1,34 +1,47 @@
 from _decimal import getcontext
-
-from src_rust_lib import src_rust_lib as rs_factory
-
 from algorithms import compute
+from algorithms.dynamic import Dynamic
+from utils.factory import PythonItemFactory, RustItemFactory
 from models import LangChoice
-import utils.factory as py_factory
-from utils.factory import read_from_csv
 from utils.input import get_params
 from utils.output import write_to_text
 
-getcontext().prec = 6
+getcontext().prec = 8
 
 
 def main():
-    filename, path, capacity, lang, implementation, write, log = get_params()
+    get_coeff = False
+    # Get execution parameters.
+    filename, path, capacity, lang, algorithm, write, log = get_params()
 
-    raw_items, coefficient = read_from_csv(path, coeff=True)
-
+    # Build items from CSV.
     if lang == LangChoice.Python:
-        items = py_factory.build_items(raw_items, coefficient)
+        factory = PythonItemFactory(lang, path)
     else:
-        items = rs_factory.build_items(raw_items)
+        factory = RustItemFactory(lang, path)
 
-    combination = compute(implementation, items, capacity)
+    if isinstance(algorithm, Dynamic):
+        get_coeff = True
 
+    items = factory.build_items(get_coeff=get_coeff)
+
+    # Compute the best combination of items.
+    combination = compute(algorithm, items, capacity)
+
+    # Export the results.
     if write:
-        write_to_text(filename, combination, implementation)
+        write_to_text(filename, combination, algorithm)
 
     if log:
-        print(combination)
+        for item in combination.items:
+            print(
+                f"{item.name}\n"
+                f"{item.weight=}, {item.weighted_weight=}\n"
+                f"{item.rate=}, {item.weighted_rate=}\n"
+                f"{item.value=}, {item.weighted_value=}\n"
+                f"{item.coefficient}"
+            )
+        print(f"{combination.value=}\n{combination.weight=}")
 
 
 if __name__ == "__main__":

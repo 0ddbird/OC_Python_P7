@@ -1,57 +1,91 @@
 import csv
+from abc import ABC, abstractmethod
 from pathlib import Path
-
+from knapsack_rs.knapsack_rs import rs_get_coefficient, rs_build_items
 from _decimal import Decimal
+from typing import Optional
 
-from models import Item
+from models import Item, LangChoice
 
 
-def get_coefficient(raw_items: list) -> int:
-    dec_places = 0
-    no_dec_places = True
+class AbstractItemFactory(ABC):
+    def __init__(self, language: LangChoice, file_path: Path) -> None:
+        self.raw_items: Optional[list[tuple[str, str, str]]] = None
+        self.language: LangChoice = language
+        self.coefficient: int = 1
+        self.file_path: Path = file_path
 
-    for item in raw_items:
-        weight = item[1]
-        value = item[2]
-        w_dec_places = weight.split(".")[1] if "." in weight else ""
-        v_dec_places = value.split(".")[1] if "." in value else ""
-        dec_places = max(dec_places, len(w_dec_places), len(v_dec_places))
-        decimal_places: str = w_dec_places + v_dec_places
-        if no_dec_places and any(digit != "0" for digit in decimal_places):
-            no_dec_places = False
+    @abstractmethod
+    def _get_coefficient(self) -> int:
+        raise NotImplementedError
 
-    if no_dec_places:
+    def _get_raw_items(self) -> None:
+        with open(self.file_path, "r") as f:
+            reader = csv.reader(f)
+            next(reader)
+            self.raw_items = [tuple(row) for row in reader]
+
+    @abstractmethod
+    def build_items(self, get_coeff: bool = False) -> list[Item]:
+        raise NotImplementedError
+
+
+class PythonItemFactory(AbstractItemFactory):
+    def __init__(self, language: LangChoice, file_path: Path) -> None:
+        super().__init__(language, file_path)
+
+    def _get_coefficient(self) -> int:
         dec_places = 0
-    return 10**dec_places
+        no_dec_places = True
 
+        for item in self.raw_items:
+            weight = item[1]
+            rate = item[2]
+            w_dec_places = weight.split(".")[1] if "." in weight else ""
+            r_dec_places = rate.split(".")[1] if "." in rate else ""
+            dec_places = max(dec_places, len(w_dec_places), len(r_dec_places))
+            decimal_places: str = w_dec_places + r_dec_places
+            if no_dec_places and any(digit != "0" for digit in decimal_places):
+                no_dec_places = False
 
-def read_from_csv(file_path: Path, coeff=False) -> list[tuple[str, str, str]]:
-    with open(file_path, "r") as f:
-        reader = csv.reader(f)
-        next(reader)
-        raw_items = [tuple(row) for row in reader]
-        if coeff:
-            coefficient = get_coefficient(raw_items)
-            return raw_items, coefficient
-        return raw_items
+        if no_dec_places:
+            dec_places = 0
+        return 10**dec_places
 
+    def build_items(self, get_coeff=False) -> list[Item]:
+        self._get_raw_items()
+        if get_coeff is True:
+            self.coefficient = self._get_coefficient()
 
-def build_items(raw_items: list[tuple[str, str, str]], coefficient: int) -> list[Item]:
-    items = []
+        items = []
+        for item in self.raw_items:
+            name, weight, rate = item
+            weight = Decimal(weight)
+            rate = Decimal(rate)
 
-    for item in raw_items:
-        name, weight, value = item
-        weight = Decimal(weight)
-        value = Decimal(value)
-
-        if weight <= 0 or value <= 0:
-            print(
-                f"Excluding invalid item: {name}. "
-                "Please make sure the weight and rate are positive values."
+            if weight <= 0 or rate <= 0:
+                print(
+                    f"Excluding invalid item: {name}. "
+                    "Please make sure all weights and rates are greater than 0.0"
+                )
+                continue
+            item = Item(
+                name=name, weight=weight, rate=rate, coefficient=self.coefficient
             )
-            continue
 
-        item = Item(name=name, weight=weight, value=value, coefficient=coefficient)
-        items.append(item)
+            items.append(item)
+        return items
 
-    return items
+
+class RustItemFactory(AbstractItemFactory):
+    def __init__(self, language: LangChoice, file_path: Path) -> None:
+        super().__init__(language, file_path)
+
+    def _get_coefficient(self) -> int:
+        return rs_get_coefficient(self.raw_items)
+
+    def build_items(self, get_coeff: bool = False) -> list[Item]:
+        self._get_raw_items()
+        if get_coeff:
+            self.coefficient = self._get_coefficient()
+        return rs_build_items(self.raw_items, self.coefficient)

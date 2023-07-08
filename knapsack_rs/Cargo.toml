@@ -1,15 +1,15 @@
 [package]
-name = "src_rust_lib"
+name = "knapsack_rs"
 version = "0.1.0"
 edition = "2021"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 [lib]
-name = "src_rust_lib"
+name = "knapsack_rs"
 crate-type = ["cdylib"]
 
 [dependencies]
-pyo3 = "0.19.0"
-itertools  = "0.10.5"
-rust_decimal = "1.30.0"
+pyo3 = { version = "0.19.0", features = ["rust_decimal"] }
+itertools  = "0.11.0"
+rust_decimal = "1.0"
 rust_decimal_macros = "1.30.0"
