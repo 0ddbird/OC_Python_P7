@@ -51,7 +51,7 @@ class PyCombination:
         return "\n".join(str(item) for item in self.items)
 
 
-Combination: Union[PyCombination, RsCombination]
+Combination = Union[PyCombination, RsCombination]
 
 
 class LangChoice(Enum):
