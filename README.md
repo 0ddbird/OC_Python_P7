@@ -2,10 +2,10 @@
 
 ## Usage
 
-### Prerequisites
+### Prerequisite
 
 - You need to have Rust installed on your computer to build the `knapsack_rs` python dependency. 
-You can follow the installation instructions from [https://doc.rust-lang.org(https://doc.rust-lang.org/book/ch01-01-installation.html)
+You can follow the installation instructions from [https://doc.rust-lang.org](https://doc.rust-lang.org/book/ch01-01-installation.html)
 - You need to have Python >= 3.9 installed.
 
 ### Installation
