@@ -1,0 +1,6 @@
+Combination:
+- Share-GRUT, 498.76, 196.611192
+- Share-CBNY, 1.22, 0.479582
+- Share-MLGM, 0.01, 0.001886
+Total cost: 499.99
+Profit: 197.092660

@@ -27,7 +27,6 @@ pub fn rs_dynamic(items: Vec<Item>, capacity: usize) -> PyResult<Combination> {
 
     for i in (1..=items.len()).rev() {
         if table[i][w] != table[i-1][w] {
-            // Clone the item before pushing to knapsack_items
             knapsack_items.push(items[i-1].clone());
             w -= items[i-1].weighted_weight as usize;
         }

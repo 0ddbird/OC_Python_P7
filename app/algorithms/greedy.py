@@ -10,7 +10,7 @@ from knapsack_rs.knapsack_rs import (
 class Greedy(Algorithm):
     @property
     def name(self):
-        return "Greedy - {self.lang.name}"
+        return f"Greedy - {self.lang.name}"
 
     @perf_timer
     def py_compute(self, items: list[PyItem], capacity: int) -> Combination:

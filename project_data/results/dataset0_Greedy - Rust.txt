@@ -1,0 +1,11 @@
+Combination:
+- Action-20, 114.00, 20.52
+- Action-6, 80.00, 20.00
+- Action-4, 70.00, 14.00
+- Action-5, 60.00, 10.20
+- Action-12, 110.00, 9.90
+- Action-10, 34.00, 9.18
+- Action-19, 24.00, 5.04
+- Action-16, 8.00, 0.64
+Total cost: 500.00
+Profit: 89.48

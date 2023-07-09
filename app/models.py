@@ -1,30 +1,34 @@
 from abc import ABC, abstractmethod
 from decimal import Decimal
+from dataclasses import dataclass
 from enum import Enum
 from typing import Union
 from knapsack_rs.knapsack_rs import Item as RsItem
 from knapsack_rs.knapsack_rs import Combination as RsCombination
 
 
+@dataclass
 class Item:
-    def __init__(
-        self,
-        name: str,
-        weight: Decimal,
-        rate: Decimal,
-        coefficient: int,
-    ):
-        self.name: str = name
-        self.weight: Decimal = weight
-        self.rate: Decimal = rate
-        self.value: Decimal = self.weight * self.rate / 100
-        self.coefficient: int = coefficient
-        self.weighted_weight: int = int(weight * coefficient)
-        self.weighted_rate: int = int(rate * Decimal(coefficient))
-        self.weighted_value: int = int(self.weighted_weight * self.weighted_rate)
+    name: str
+    weight: Decimal
+    rate: Decimal
+    coefficient: int
 
-    def __repr__(self):
-        return f"Item({self.name=}, {self.weight=}, {self.value=})"
+    @property
+    def value(self) -> Decimal:
+        return self.weight * self.rate / 100
+
+    @property
+    def weighted_weight(self) -> int:
+        return int(self.weight * Decimal(self.coefficient))
+
+    @property
+    def weighted_rate(self) -> int:
+        return int(self.rate * Decimal(self.coefficient))
+
+    @property
+    def weighted_value(self) -> int:
+        return int(self.weighted_weight * self.weighted_rate)
 
     def __str__(self):
         return f"{self.name}, {self.weight}, {self.value}"

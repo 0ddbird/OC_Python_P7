@@ -10,4 +10,4 @@ Combination:
 - Action-5, 60.00, 10.20
 - Action-4, 70.00, 14.00
 Total cost: 498.00
-Profit: 99.08
+Profit: 99.080000
