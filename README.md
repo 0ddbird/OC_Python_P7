@@ -10,20 +10,21 @@ You can follow the installation instructions from [https://doc.rust-lang.org(htt
 
 ### Installation
 
-1. Clone the project from Github with  
+#### 1. Clone the project from Github
+
 `git clone https://github.com/0ddbird/OC_Python_P7.git`  
 
 
-2. In the project directory, create a new virtual environment
+#### 2. Create a new virtual environment
 
 `python -m venv <name_of_the_venv>`  
 
 
-3. Activate the virtual environment
+#### 3. Activate the virtual environment
 
 `source <name_of_the_venv>/bin/activate`  
 
-4. Install the requirements by running   
+#### 4. Install the requirements
 
 `pip install -r requirements.txt`  
 
@@ -32,20 +33,20 @@ Alternatively, since there is only one package required, you can simply run
 `pip install maturin`
 
 
-5. Navigate to the `knapsack_rs/` directory and run  
+#### 5. Navigate to the `knapsack_rs/` directory and run
 
 `maturin develop`  
 
 This will compile the binary for your platform and install it as a python dependency in your virtual environment.
 
-6. Go to the `app/` directory  
+#### 6. Go to the `app/` directory  
 
-7. Run the script
+#### 7. Run the script
 The command structure is the following:  
 `python main.py <dataset_name> <max_capacity> <algorithm_implementation [--bf | --gr | --dp]> <language_implementation [--py| --rs]> <optional : -p> <optional : -w>`
 
 #### Parameters
-**<dataset_name>**: must be the name of a csv file located in the `project_data/datasets/` directory.  
+**<dataset_name>**: must be the name of a CSV file located in the `project_data/datasets/` directory.  
 
 **<max_capacity>**: must be a positive integer (the knapsack max capacity)  
 
@@ -58,8 +59,9 @@ The command structure is the following:
 - --py will run the Python version of the chosen algorithm
 - --rs will run the Rust version of the chosen algorithm
 
-**-p (optional)**: enables verbose mode to print the result to the console
-**-w (optional)**: if enabled, will write the results to `project_data/results` as a text file. 
+**-p (optional)**: enables verbose mode to print the result to the console  
+
+**-w (optional)**: if enabled, will write the results to `project_data/results/` as a text file. 
 
 
 #### Examples
