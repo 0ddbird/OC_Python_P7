@@ -1,4 +1,4 @@
-from models import Algorithm, Combination, Item as PyItem
+from models import Algorithm, PyCombination, Item as PyItem
 from utils.profiling import perf_timer
 from knapsack_rs.knapsack_rs import (
     rs_greedy,
@@ -13,7 +13,7 @@ class Greedy(Algorithm):
         return f"Greedy - {self.lang.name}"
 
     @perf_timer
-    def py_compute(self, items: list[PyItem], capacity: int) -> Combination:
+    def py_compute(self, items: list[PyItem, ...], capacity: int) -> PyCombination:
         current_weight = 0
         combination = []
 
@@ -25,8 +25,8 @@ class Greedy(Algorithm):
             combination.append(item)
             current_weight += item.weight
 
-        return Combination(combination)
+        return PyCombination(combination)
 
     @perf_timer
-    def rs_compute(self, items: list[RsItem], capacity: int) -> RsCombination:
+    def rs_compute(self, items: list[RsItem, ...], capacity: int) -> RsCombination:
         return rs_greedy(items, capacity)

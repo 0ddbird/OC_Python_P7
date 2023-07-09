@@ -1,11 +1,9 @@
-from typing import Union
-
-from models import Combination, Item, LangChoice
+from models import Item, LangChoice, Combination
 
 
 def compute(
     algorithm, items: list[Item, ...], capacity: int
-) -> Union[Combination, list[dict]]:
+) -> Combination:
     if algorithm.lang == LangChoice.Python:
         return algorithm.py_compute(items=items, capacity=capacity)
     else:

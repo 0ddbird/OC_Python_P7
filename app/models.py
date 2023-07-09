@@ -34,7 +34,7 @@ class Item:
         return f"{self.name}, {self.weight}, {self.value}"
 
 
-class Combination:
+class PyCombination:
     def __init__(self, items: list[Item]):
         self.items = items
 
@@ -49,6 +49,9 @@ class Combination:
 
     def __str__(self):
         return "\n".join(str(item) for item in self.items)
+
+
+Combination: Union[PyCombination, RsCombination]
 
 
 class LangChoice(Enum):
@@ -67,7 +70,7 @@ class Algorithm(ABC):
 
     def compute(
         self, items: Union[list[Item], list[RsItem]], capacity: int
-    ) -> Combination:
+    ) -> PyCombination:
         if self.lang == LangChoice.Python:
             return self.py_compute(items, capacity)
         else:
@@ -78,5 +81,5 @@ class Algorithm(ABC):
         raise NotImplementedError
 
     @abstractmethod
-    def py_compute(self, items: list[Item], capacity: int) -> Combination:
+    def py_compute(self, items: list[Item], capacity: int) -> PyCombination:
         raise NotImplementedError

@@ -3,9 +3,10 @@ from abc import ABC, abstractmethod
 from pathlib import Path
 from knapsack_rs.knapsack_rs import rs_get_coefficient, rs_build_items
 from _decimal import Decimal
-from typing import Optional
+from typing import Optional, Union
 
-from models import Item, LangChoice
+from models import Item as PyItem, LangChoice
+from knapsack_rs.knapsack_rs import Item as RsItem
 
 
 class AbstractItemFactory(ABC):
@@ -26,7 +27,7 @@ class AbstractItemFactory(ABC):
             self.raw_items = [tuple(row) for row in reader]
 
     @abstractmethod
-    def build_items(self, get_coeff: bool = False) -> list[Item]:
+    def build_items(self, get_coeff: bool = False) -> Union[list[PyItem, ...], list[RsItem, ...]]:
         raise NotImplementedError
 
 
@@ -52,9 +53,9 @@ class PythonItemFactory(AbstractItemFactory):
             dec_places = 0
         return 10**dec_places
 
-    def build_items(self, get_coeff=False) -> list[Item]:
+    def build_items(self, get_coefficient: bool = False) -> list[PyItem, ...]:
         self._get_raw_items()
-        if get_coeff is True:
+        if get_coefficient:
             self.coefficient = self._get_coefficient()
 
         items = []
@@ -84,8 +85,8 @@ class RustItemFactory(AbstractItemFactory):
     def _get_coefficient(self) -> int:
         return rs_get_coefficient(self.raw_items)
 
-    def build_items(self, get_coeff: bool = False) -> list[Item]:
+    def build_items(self, get_coefficient: bool = False) -> list[RsItem]:
         self._get_raw_items()
-        if get_coeff:
+        if get_coefficient:
             self.coefficient = self._get_coefficient()
         return rs_build_items(self.raw_items, self.coefficient)

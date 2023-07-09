@@ -1,4 +1,4 @@
-from models import Algorithm, Combination, Item as PyItem
+from models import Algorithm, PyCombination, Item as PyItem
 from utils.profiling import perf_timer
 from knapsack_rs.knapsack_rs import (
     rs_brute_force,
@@ -27,7 +27,7 @@ class BruteForce(Algorithm):
         return f"brute_force - {self.lang.name}"
 
     @perf_timer
-    def py_compute(self, items: list[PyItem], capacity: int) -> Combination:
+    def py_compute(self, items: list[PyItem, ...], capacity: int) -> PyCombination:
         if len(items) > 20:
             raise ValueError(
                 "Brute force solution can't be used with more than 20 items"
@@ -48,8 +48,12 @@ class BruteForce(Algorithm):
         best_solution = max(possible_solutions, key=lambda x: x[1])
         best_list = [item for item in best_solution[0]]
 
-        return Combination(best_list)
+        return PyCombination(best_list)
 
     @perf_timer
-    def rs_compute(self, items: list[RsItem], capacity: int) -> RsCombination:
+    def rs_compute(self, items: list[RsItem, ...], capacity: int) -> RsCombination:
+        if len(items) > 20:
+            raise ValueError(
+                "Brute force solution can't be used with more than 20 items"
+            )
         return rs_brute_force(items, capacity)
