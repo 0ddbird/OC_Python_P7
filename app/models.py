@@ -1,10 +1,10 @@
 from abc import ABC, abstractmethod
+import csv
 from decimal import Decimal
 from dataclasses import dataclass
 from enum import Enum
-from typing import Union
-from knapsack_rs.knapsack_rs import Item as RsItem
-from knapsack_rs.knapsack_rs import Combination as RsCombination
+from pathlib import Path
+from typing import Optional
 
 
 @dataclass
@@ -34,7 +34,7 @@ class Item:
         return f"{self.name}, {self.weight}, {self.value}"
 
 
-class PyCombination:
+class Combination:
     def __init__(self, items: list[Item]):
         self.items = items
 
@@ -51,12 +51,32 @@ class PyCombination:
         return "\n".join(str(item) for item in self.items)
 
 
-Combination = Union[PyCombination, RsCombination]
-
 
 class LangChoice(Enum):
     Python = "--py"
     Rust = "--rs"
+
+
+class AbstractItemFactory(ABC):
+    def __init__(self, language: LangChoice, file_path: Path) -> None:
+        self.raw_items: Optional[list[tuple[str, str, str]]] = None
+        self.language: LangChoice = language
+        self.coefficient: int = 1
+        self.file_path: Path = file_path
+
+    @abstractmethod
+    def _get_coefficient(self) -> int:
+        raise NotImplementedError
+
+    def _get_raw_items(self) -> None:
+        with open(self.file_path, "r") as f:
+            reader = csv.reader(f)
+            next(reader)
+            self.raw_items = [tuple(row) for row in reader]
+
+    @abstractmethod
+    def build_items(self, get_coeff: bool = False) -> list[Item]:
+        raise NotImplementedError
 
 
 class Algorithm(ABC):
@@ -68,18 +88,9 @@ class Algorithm(ABC):
     def name(self):
         raise NotImplementedError
 
+    @abstractmethod
     def compute(
-        self, items: Union[list[Item], list[RsItem]], capacity: int
-    ) -> PyCombination:
-        if self.lang == LangChoice.Python:
-            return self.py_compute(items, capacity)
-        else:
-            return self.rs_compute(items, capacity)
-
-    @abstractmethod
-    def rs_compute(self, items: list[RsItem], capacity: int) -> RsCombination:
+        self, items: list[Item], capacity: int
+    ) -> Combination:
         raise NotImplementedError
 
-    @abstractmethod
-    def py_compute(self, items: list[Item], capacity: int) -> PyCombination:
-        raise NotImplementedError

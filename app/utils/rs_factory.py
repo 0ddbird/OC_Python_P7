@@ -1,34 +1,9 @@
-import csv
-from abc import ABC, abstractmethod
 from pathlib import Path
-from knapsack_rs.knapsack_rs import rs_get_coefficient, rs_build_items
 from _decimal import Decimal
-from typing import Optional, Union
+from models import AbstractItemFactory, LangChoice
+from knapsack_rs.knapsack_rs import Item
+from knapsack_rs.knapsack_rs import rs_get_coefficient, rs_build_items
 
-from models import Item as PyItem, LangChoice
-from knapsack_rs.knapsack_rs import Item as RsItem
-
-
-class AbstractItemFactory(ABC):
-    def __init__(self, language: LangChoice, file_path: Path) -> None:
-        self.raw_items: Optional[list[tuple[str, str, str]]] = None
-        self.language: LangChoice = language
-        self.coefficient: int = 1
-        self.file_path: Path = file_path
-
-    @abstractmethod
-    def _get_coefficient(self) -> int:
-        raise NotImplementedError
-
-    def _get_raw_items(self) -> None:
-        with open(self.file_path, "r") as f:
-            reader = csv.reader(f)
-            next(reader)
-            self.raw_items = [tuple(row) for row in reader]
-
-    @abstractmethod
-    def build_items(self, get_coeff: bool = False) -> Union[list[PyItem, ...], list[RsItem, ...]]:
-        raise NotImplementedError
 
 
 class PythonItemFactory(AbstractItemFactory):
@@ -53,7 +28,7 @@ class PythonItemFactory(AbstractItemFactory):
             dec_places = 0
         return 10**dec_places
 
-    def build_items(self, get_coefficient: bool = False) -> list[PyItem, ...]:
+    def build_items(self, get_coefficient: bool = False) -> list[Item]:
         self._get_raw_items()
         if get_coefficient:
             self.coefficient = self._get_coefficient()
@@ -85,7 +60,7 @@ class RustItemFactory(AbstractItemFactory):
     def _get_coefficient(self) -> int:
         return rs_get_coefficient(self.raw_items)
 
-    def build_items(self, get_coefficient: bool = False) -> list[RsItem]:
+    def build_items(self, get_coefficient: bool = False) -> list[Item]:
         self._get_raw_items()
         if get_coefficient:
             self.coefficient = self._get_coefficient()

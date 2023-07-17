@@ -1,9 +1,8 @@
 import sys
 from pathlib import Path
-
-from algorithms.brute_force import BruteForce
-from algorithms.dynamic import Dynamic
-from algorithms.greedy import Greedy
+from algorithms.py.py_brute_force import PyBruteForce
+from algorithms.py.py_dynamic import PyDynamic
+from algorithms.py.py_greedy import PyGreedy
 from models import Algorithm, LangChoice
 
 
@@ -11,7 +10,7 @@ def validate_args_count(args: list[str]) -> None:
     if len(args) < 3:
         print(
             "Usage: python main.py <dataset_file_name> "
-            "<max_weight> [--bf | --dp | --greedy] [--py | --rs] [-w] [-p]"
+            "<max_weight> [--bf | --dp | --gr] [--py | --rs] [-w] [-p]"
         )
         exit(1)
 
@@ -61,15 +60,27 @@ def get_optional_flags(args: list[str]) -> bool:
 
 
 def get_implementation(algo, lang_choice):
-    match algo:
-        case "--bf":
-            return BruteForce(lang_choice)
-        case "--dp":
-            return Dynamic(lang_choice)
-        case "--gr":
-            return Greedy(lang_choice)
-        case _:
-            return Dynamic(lang_choice)
+
+    implementations = {
+            LangChoice.Python: {
+                "--bf": PyBruteForce(lang_choice),
+                "--dp": PyDynamic(lang_choice),
+                "--gr": PyGreedy(lang_choice)
+            }
+        }
+
+    if lang_choice == LangChoice.Rust:
+        from algorithms.rs.rs_brute_force import RsBruteForce
+        from algorithms.rs.rs_dynamic import RsDynamic
+        from algorithms.rs.rs_greedy import RsGreedy
+
+        implementations[LangChoice.Rust] = {
+            "--bf": RsBruteForce(lang_choice),
+            "--dp": RsDynamic(lang_choice),
+            "--gr": RsGreedy(lang_choice)
+        }
+
+    return implementations[lang_choice][algo]
 
 
 def get_params() -> tuple[str, Path, int, Algorithm, bool]:

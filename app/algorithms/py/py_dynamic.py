@@ -1,19 +1,14 @@
-from models import Algorithm, PyCombination, Item
+from models import Algorithm, Combination, Item
 from utils.profiling import perf_timer
-from knapsack_rs.knapsack_rs import (
-    rs_dynamic,
-    Item as RsItem,
-    Combination as RsCombination,
-)
 
 
-class Dynamic(Algorithm):
+class PyDynamic(Algorithm):
     @property
     def name(self):
         return f"Dynamic programming - {self.lang.name}"
 
     @perf_timer
-    def py_compute(self, items: list[Item, ...], capacity: int) -> PyCombination:
+    def compute(self, items: list[Item], capacity: int) -> Combination:
         coefficient = items[0].coefficient
         weighted_capacity = int(capacity * coefficient)
 
@@ -50,8 +45,5 @@ class Dynamic(Algorithm):
                 max_value -= items[i - 1].weighted_value
                 w = w - items[i - 1].weighted_weight
 
-        return PyCombination(knapsack_items)
+        return Combination(knapsack_items)
 
-    @perf_timer
-    def rs_compute(self, items: list[RsItem, ...], capacity: int) -> RsCombination:
-        return rs_dynamic(items, capacity)
