@@ -5,7 +5,6 @@ from knapsack_rs.knapsack_rs import Item
 from knapsack_rs.knapsack_rs import rs_get_coefficient, rs_build_items
 
 
-
 class PythonItemFactory(AbstractItemFactory):
     def __init__(self, language: LangChoice, file_path: Path) -> None:
         super().__init__(language, file_path)

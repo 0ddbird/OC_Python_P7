@@ -60,14 +60,13 @@ def get_optional_flags(args: list[str]) -> bool:
 
 
 def get_implementation(algo, lang_choice):
-
     implementations = {
-            LangChoice.Python: {
-                "--bf": PyBruteForce(lang_choice),
-                "--dp": PyDynamic(lang_choice),
-                "--gr": PyGreedy(lang_choice)
-            }
+        LangChoice.Python: {
+            "--bf": PyBruteForce(lang_choice),
+            "--dp": PyDynamic(lang_choice),
+            "--gr": PyGreedy(lang_choice),
         }
+    }
 
     if lang_choice == LangChoice.Rust:
         from algorithms.rs.rs_brute_force import RsBruteForce
@@ -77,7 +76,7 @@ def get_implementation(algo, lang_choice):
         implementations[LangChoice.Rust] = {
             "--bf": RsBruteForce(lang_choice),
             "--dp": RsDynamic(lang_choice),
-            "--gr": RsGreedy(lang_choice)
+            "--gr": RsGreedy(lang_choice),
         }
 
     return implementations[lang_choice][algo]

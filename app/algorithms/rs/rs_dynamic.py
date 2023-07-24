@@ -1,10 +1,6 @@
 from models import Algorithm
 from utils.profiling import perf_timer
-from knapsack_rs.knapsack_rs import (
-    rs_dynamic,
-    Item,
-    Combination
-)
+from knapsack_rs.knapsack_rs import rs_dynamic, Item, Combination
 
 
 class RsDynamic(Algorithm):

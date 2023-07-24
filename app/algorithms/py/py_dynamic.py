@@ -34,16 +34,15 @@ class PyDynamic(Algorithm):
         knapsack_items = []
         w = weighted_capacity
 
-        for i in range(len(items), 0, -1):
+        for i in range(len(items) - 1, -1, -1):
             if max_value <= 0:
                 break
 
-            if max_value == table[i - 1][w]:
+            if max_value == table[i][w]:
                 continue
             else:
-                knapsack_items.append(items[i - 1])
-                max_value -= items[i - 1].weighted_value
-                w = w - items[i - 1].weighted_weight
+                knapsack_items.append(items[i])
+                max_value -= items[i].weighted_value
+                w = w - items[i].weighted_weight
 
         return Combination(knapsack_items)
-

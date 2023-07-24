@@ -51,7 +51,6 @@ class Combination:
         return "\n".join(str(item) for item in self.items)
 
 
-
 class LangChoice(Enum):
     Python = "--py"
     Rust = "--rs"
@@ -89,8 +88,5 @@ class Algorithm(ABC):
         raise NotImplementedError
 
     @abstractmethod
-    def compute(
-        self, items: list[Item], capacity: int
-    ) -> Combination:
+    def compute(self, items: list[Item], capacity: int) -> Combination:
         raise NotImplementedError
-

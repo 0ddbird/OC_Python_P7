@@ -20,11 +20,11 @@ def main():
     else:
         from utils.rs_factory import RustItemFactory
         from algorithms.rs.rs_dynamic import RsDynamic
-        
+
         factory = RustItemFactory(lang, path)
         if isinstance(algorithm, RsDynamic):
             get_coefficient = True
-    
+
     items = factory.build_items(get_coefficient)
     combination = algorithm.compute(items, capacity)
 

@@ -1,10 +1,6 @@
 from utils.profiling import perf_timer
 from models import Algorithm
-from knapsack_rs.knapsack_rs import (
-    rs_brute_force,
-    Item,
-    Combination
-)
+from knapsack_rs.knapsack_rs import rs_brute_force, Item, Combination
 
 
 class RsBruteForce(Algorithm):
