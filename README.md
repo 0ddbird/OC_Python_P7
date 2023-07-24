@@ -1,9 +1,35 @@
 # OpenClassrooms - Python certification - Project #7
 
+## [Index](#index)
+
+1. <a href=#intro>Introduction</a>
+2. <a href=#install>Installation</a>
+3. <a href=#links>Links</a>
+4. <a href=#complexity>Algorithm complexity breakdown</a>
+
+
+## [1. Introduction](#intro)
+
+Algorithm Project : the objective of this project is to implement 2 algorithms to solve the Knapsack problem.
+
+### Part 1: Brute Force Solution
+
+The goal of this part is to provide an initial "brute force" solution that should generate the list of items to choose from a list of 20 elements.
+
+### Part 2: Optimized Solution
+
+This part requires implementing a second solution that can read a file containing items and propose the best possible combination.
+
+It is also required to provide a set of slides containing the following:
+
+- An analysis of the brute force algorithm.
+- A diagram, flowchart, or pseudocode describing the thought process behind the optimized solution.
+- The algorithm chosen for the optimized version and the algorithm's limitations (edge cases).
+- A comparison of the efficiency and performance of the brute force algorithm versus the optimized algorithm using Big-O notation, time complexity, and memory analysis.
+
+## [2. Installation](#install)
+
 You need to have Python >= 3.9 installed.
-
-## Installation
-
 ### 1. Clone the project from Github
 
 `git clone https://github.com/0ddbird/OC_Python_P7.git`  
@@ -105,32 +131,13 @@ The command structure is the following:
 `python main.py dataset1 500 --gr --py -w`  
 `python main.py dataset2 500 --dp --rs -p -w`  
 
-## Introduction
-
-Algorithm Project : the objective of this project is to implement 2 algorithms to solve the Knapsack problem.
-
-### Part 1: Brute Force Solution
-
-The goal of this part is to provide an initial "brute force" solution that should generate the list of items to choose from a list of 20 elements.
-
-### Part 2: Optimized Solution
-
-This part requires implementing a second solution that can read a file containing items and propose the best possible combination.
-
-It is also required to provide a set of slides containing the following:
-
-- An analysis of the brute force algorithm.
-- A diagram, flowchart, or pseudocode describing the thought process behind the optimized solution.
-- The algorithm chosen for the optimized version and the algorithm's limitations (edge cases).
-- A comparison of the efficiency and performance of the brute force algorithm versus the optimized algorithm using Big-O notation, time complexity, and memory analysis.
-
-
-## Links
+[:arrow_up_small: Back to top](#index)
+## [3. Links](#links)
 
 [Project diagram](https://whimsical.com/BzsL865mDueuqFBd5RSfjU)  
 [Algorigrams](https://whimsical.com/p7-algorigrammes-AxG7CBJ1VWqR25my86c9Rw)  
 
-## Algorithm complexity
+## [4. Algorithm complexity breakdown](#complexity)
 
 ### Brute force
 1. Check if the number of items is greater than 20: **O(1)**.
@@ -160,3 +167,5 @@ It is also required to provide a set of slides containing the following:
 
 **Equation f(n) = n log n + n**  
 **Overall time complexity: O(n log n)**  
+
+[:arrow_up_small: Back to top](#index)
