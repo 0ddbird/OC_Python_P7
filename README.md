@@ -1,14 +1,14 @@
 # OpenClassrooms - Python certification - Project #7
 
-## [Index](#index)
+## <a id="index">Index</a>
 
-1. <a href=#intro>Introduction</a>
-2. <a href=#install>Installation</a>
-3. <a href=#links>Links</a>
-4. <a href=#complexity>Algorithm complexity breakdown</a>
+1. [Introduction](#intro)
+2. [Installation](#install)
+3. [Links](#links)
+4. [Algorithm complexity breakdown](#complexity)
 
 
-## [1. Introduction](#intro)
+## 1. <a id="intro">Introduction</a>
 
 Algorithm Project : the objective of this project is to implement 2 algorithms to solve the Knapsack problem.
 
@@ -27,30 +27,37 @@ It is also required to provide a set of slides containing the following:
 - The algorithm chosen for the optimized version and the algorithm's limitations (edge cases).
 - A comparison of the efficiency and performance of the brute force algorithm versus the optimized algorithm using Big-O notation, time complexity, and memory analysis.
 
-## [2. Installation](#install)
+## 2. <a id="install">Installation</a>
 
 You need to have Python >= 3.9 installed.
 ### 1. Clone the project from Github
 
-`git clone https://github.com/0ddbird/OC_Python_P7.git`  
+```bash
+git clone https://github.com/0ddbird/OC_Python_P7.git
+```
 
-### 2. Go to the `app/` directory  
+### <a id="step2">2.</a> Navigate to the `app` directory  
+```bash
+`cd /app`
+```
 
 ### 3. Run the script
-The command structure is the following:  
-`python main.py <dataset_name> <max_capacity> <algorithm_implementation [--bf | --gr | --dp]> <language_implementation [--py| --rs]> <optional : -p> <optional : -w>`
+The command structure is :  
+```bash
+python main.py <dataset_name> <max_capacity> <algorithm> <language> <optional_flags
+```
 
 #### Parameters
-**<dataset_name>**: must be the name of a CSV file located in the `project_data/datasets/` directory.  
+**dataset_name**: must be the name of a CSV file located in the `project_data/datasets/` directory.  
 
-**<max_capacity>**: must be a positive integer (the knapsack max capacity)  
+**max_capacity**: must be a positive integer (the knapsack capacity)  
 
-**<algorithm_implementation>**: three possible choices:
-- --bf: a brute force algorithm that generates all possible combinations from the given items, and return the one with the best value within the constraint of `max_capacity`.
+**algorithm**: three possible choices:
+- --bf: a brute force algorithm that generates all possible combinations from the given items, and >return the one with the best value within the constraint of `max_capacity`.
 - --gr: a greedy algorithm that sorts all items by value (descending)
 - --dp: a dynamic programming algorithm  
 
-**<language_implementation>**: two choices Python or Rust.
+**<language**: two choices Python or Rust.
 - --py will run the Python version of the chosen algorithm
 - --rs will run the Rust version of the chosen algorithm
 
@@ -72,72 +79,56 @@ You can follow the installation instructions from [https://doc.rust-lang.org](ht
 
 ### 1. Clone the project from Github
 
-`git clone https://github.com/0ddbird/OC_Python_P7.git`  
+```bash
+git clone https://github.com/0ddbird/OC_Python_P7.git`
+```
 
 ### 2. Go to the `app/` directory  
 
 ### 2. Create a new virtual environment
 
-`python -m venv <name_of_the_venv>`  
-
+```bash
+python -m venv <name_of_the_venv>
+```
 
 ### 3. Activate the virtual environment
 
-`source <name_of_the_venv>/bin/activate`  
+```bash
+source <name_of_the_venv>/bin/activate
+```
 
 ### 4. Install the requirements
 
-`pip install -r requirements.txt`  
+```bash
+pip install -r requirements.txt
+```
 
 Alternatively, since there is only one package required, you can simply run  
 
-`pip install maturin`
+```bash
+pip install maturin`
+```
 
 
 ### 5. Navigate to the `knapsack_rs/` directory and run
 
-`maturin develop`  
+```bash
+maturin develop
+```
 
 This will compile the binary for your platform and install it as a python dependency in your virtual environment.
 
-### 6. Go to the `app/` directory  
+### 6. [Go to Python Installation step #2](#step2)
 
-### 7. Run the script
-The command structure is the following:  
-`python main.py <dataset_name> <max_capacity> <algorithm_implementation [--bf | --gr | --dp]> <language_implementation [--py| --rs]> <optional : -p> <optional : -w>`
-
-### Parameters
-**<dataset_name>**: must be the name of a CSV file located in the `project_data/datasets/` directory.  
-
-**<max_capacity>**: must be a positive integer (the knapsack max capacity)  
-
-**<algorithm_implementation>**: three possible choices:
-- --bf: a brute force algorithm that generates all possible combinations from the given items, and return the one with the best value within the constraint of `max_capacity`.
-- --gr: a greedy algorithm that sorts all items by value (descending)
-- --dp: a dynamic programming algorithm  
-
-**<language_implementation>**: two choices Python or Rust.
-- --py will run the Python version of the chosen algorithm
-- --rs will run the Rust version of the chosen algorithm
-
-**-p (optional)**: enables verbose mode to print the result to the console  
-
-**-w (optional)**: if enabled, will write the results to `project_data/results/` as a text file. 
-
-
-### Examples
-
-`python main.py dataset0 500 --bf --py -p`  
-`python main.py dataset1 500 --gr --py -w`  
-`python main.py dataset2 500 --dp --rs -p -w`  
 
 [:arrow_up_small: Back to top](#index)
-## [3. Links](#links)
+## 3. <a id="links">Links</a>
 
 [Project diagram](https://whimsical.com/BzsL865mDueuqFBd5RSfjU)  
 [Algorigrams](https://whimsical.com/p7-algorigrammes-AxG7CBJ1VWqR25my86c9Rw)  
 
-## [4. Algorithm complexity breakdown](#complexity)
+[:arrow_up_small: Back to top](#index)
+## 4. <a id="complexity">Algorithm complexity breakdown</a>
 
 ### Brute force
 1. Check if the number of items is greater than 20: **O(1)**.
