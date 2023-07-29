@@ -6,7 +6,7 @@
 2. [Brute force algorithm](#bf)
 3. [Greedy algorithm](#gr)
 4. [Dynamic programming algorithm](#dp)
-
+5. [Time complexity comparision](#comparison)
 
 ## <a id="intro">1. Introduction</a>
 
@@ -64,7 +64,7 @@ print(sys.getsizeof(item))  # 48 bytes
 
 ## <a id="bf"> 2. Brute force</a>
 
-### Steps
+### Steps (v1)
 
 1. Check if the number of items is greater than 20: **O(1)**.
 2. Getting all combinations of items: **O(n*2^n)**.
@@ -146,6 +146,17 @@ Since we know the size of an item is of 48 bytes, this first step uses 576 bytes
 
 However, we can optimize this solution by filtering the combinations for which the combination weight is greater than the total capcity.
 
+### Steps (v2)
+
+1. Check if the number of items is greater than 20: `O(1)`.
+2. For each combination (total of 2^n), we check the weight and calculate the value. This is done in the inner loop for n items: `O(n*2^n)`.
+3. If the weight of the combination doesn't exceed the capacity, append the combination to the list: This operation is within the same loop so it doesn't add to the complexity.
+4. Finding the maximum value combination: `O(2^n)`.
+5. Creating a Combination object from the best combination. This is done in constant time: `O(1)`.
+
+**Equation:** `f(n) = 1 + n*2^n + 2^n + 1`  
+**Overall time complexity:** `O(n*2^n)`
+
 This leaves only:
 
 - 4 combinations
@@ -197,10 +208,19 @@ Then it fills a new list by appending the items from the best value one to the l
 For n items, in the worst case scenario, we have to append all n items.  
 So for 3 items, we would have at some point 2 lists holding up to 3 items each.  
 
-3 * 48 bytes * 2  = 144 bytes
+3 * 48 * 2 + 88 * 2  = 464
 
-In the best case scenario, no item fits because of its weight being greater than the max capacity.
-This would make 0 byte.  
+In the best case scenario, no item fits because of its weight being greater than the max capacity.  
+We still have a list of 3 items, and a second list that stays empty.
+
+first list weight : 3 * 48 + 88 = 232  
+second list weight : 88  
+total: 232 + 88 = 320  
+
+Total memory usage in the worst case scenario : 464 bytes  
+Total memory usage in the best case scenario: 320 bytes
+
+
 
 [:arrow_up_small: Back to top](#index)
 
@@ -317,5 +337,32 @@ items_size = sys.getsizeof(items)  # 88 + 3 * 48 = 232 bytes
 
 1048 + 232 = 1280  
 Total memory usage for Dynamic programming solution : 1280 bytes for a capacity of 4 and 3 items.
+
+[:arrow_up_small: Back to top](#index)
+
+## <a id=comparison>5. Time complexity comparison</a>
+
+![Figure1](Figure_1.png)
+
+The area under the curve for each function represents the total "work" done by the algorithm, as represented by the integral of the function over the specified interval.  
+The greater the area under the curve, the more work the algorithm does, and generally, the slower it is.
+
+### Brute Force 
+
+With an area of approximately 29,585,846, the brute force method clearly does the most work of any of the algorithms, which is expected given its definition. Brute force algorithms work by exhaustively trying all possible solutions, which tends to lead to very high time complexity, especially as the size of the input increases. This is clearly shown by the large area under the curve.
+
+### Greedy 
+
+The greedy algorithm has an area of about 920, indicating that it does significantly less work than the brute force method. Greedy algorithms work by making the locally optimal choice at each step with the hope that these local choices lead to a global optimum. This approach can be much more efficient than a brute force method, though it may not always yield the best possible solution.
+
+### Dynamic Programming (capacity = 500) 
+
+The dynamic programming algorithm with a capacity of 500 has an area of about 199,700, suggesting it does more work than the greedy algorithm, but far less than the brute force method. Dynamic programming is a method for solving complex problems by breaking them down into simpler subproblems and storing the results of these subproblems to avoid redundant work. The efficiency of a dynamic programming solution can depend on factors like the 'capacity' parameter, which is clear from the difference in area when the capacity changes.
+
+### Dynamic Programming (capacity = 50,000) 
+With a capacity of 50,000, the area under the curve for the dynamic programming solution increases to about 19,950,200. This shows that as the 'capacity' parameter increases, the amount of work the algorithm does also increases, though it still does less work than the brute force method.
+
+### Conclusion
+These area values show a clear ranking in terms of work done by the algorithms: Brute Force > Dynamic Programming (high capacity) > Dynamic Programming (low capacity) > Greedy. This suggests that, for the range of inputs tested, the Greedy algorithm is the most efficient, followed by the Dynamic Programming algorithm (with lower capacity being more efficient), and the Brute Force algorithm is the least efficient.
 
 [:arrow_up_small: Back to top](#index)

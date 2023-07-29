@@ -10,6 +10,8 @@
 
 ## 1. <a id="intro">Introduction</a>
 
+:mag: **To read the algorithms analysis, please check the `presentation/` folder.** 
+
 Algorithm Project : the objective of this project is to implement 2 algorithms to solve the Knapsack problem.
 
 ### Part 1: Brute Force Solution
@@ -26,6 +28,7 @@ It is also required to provide a set of slides containing the following:
 - A diagram, flowchart, or pseudocode describing the thought process behind the optimized solution.
 - The algorithm chosen for the optimized version and the algorithm's limitations (edge cases).
 - A comparison of the efficiency and performance of the brute force algorithm versus the optimized algorithm using Big-O notation, time complexity, and memory analysis.
+
 
 ## 2. <a id="install">Installation</a>
 

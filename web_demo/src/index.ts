@@ -10,3 +10,4 @@ resetButton.addEventListener('click', handleResetWrapper)
 ffwdButton.addEventListener('click', handleFastForwardWrapper)
 
 populateDOMItems()
+
