@@ -125,38 +125,5 @@ This will compile the binary for your platform and install it as a python depend
 ## 3. <a id="links">Links</a>
 
 [Project diagram](https://whimsical.com/BzsL865mDueuqFBd5RSfjU)  
-[Algorigrams](https://whimsical.com/p7-algorigrammes-AxG7CBJ1VWqR25my86c9Rw)  
-
-[:arrow_up_small: Back to top](#index)
-## 4. <a id="complexity">Algorithm complexity breakdown</a>
-
-### Brute force
-1. Check if the number of items is greater than 20: **O(1)**.
-2. Getting all combinations of items: **O(n*2^n)**.
-3. Checking the weight and calculating the value of each combination: **O(n*2^n)**.
-4. Finding the maximum value combination: **O(2^n)**.
-5. Creating a list of the items in the best solution: **O(n)**.
-
-**Equation : f(n) = 1 + 3n*2^n + 2^n + n**  
-**Overall time complexity: O(n*2^n).**  
-
-
-###  Dynamic
-
-1. Initialization of a 2D table of size (n+1) x (capacity+1): **O(n*capacity)**.
-2. Filling the table using a double loop with max operations: **O(n*capacity)**.
-3. Linear scan over the sorted list of items: **O(n)**. 
-
-**Equation : f(n, capacity) = 2n*capacity + n**  
-**Overall time complexity: O(n*capacity).**  
-
-###  Greedy
-
-1. Sorting the items based on their value: **O(n log n)**, where n is the number of items.  
-2. Linear scan over the sorted list of items: **O(n)**.  
-
-
-**Equation f(n) = n log n + n**  
-**Overall time complexity: O(n log n)**  
 
 [:arrow_up_small: Back to top](#index)
