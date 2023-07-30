@@ -60,7 +60,7 @@ class AbstractItemFactory(ABC):
     def __init__(self, language: LangChoice, file_path: Path) -> None:
         self.raw_items: Optional[list[tuple[str, str, str]]] = None
         self.language: LangChoice = language
-        self.coefficient: int = 1
+        self.coefficient: int = 0
         self.file_path: Path = file_path
 
     @abstractmethod

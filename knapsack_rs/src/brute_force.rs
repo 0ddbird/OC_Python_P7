@@ -2,48 +2,78 @@ use crate::models::{Combination, Item};
 use pyo3::{pyfunction, PyResult};
 use rust_decimal::prelude::FromPrimitive;
 use rust_decimal::Decimal;
-use std::cmp::Ordering;
 
-fn get_all_combinations(items: &Vec<Item>) -> Vec<Vec<Item>> {
-    let n = items.len();
-    let mut combinations = vec![];
+struct TempCombination<'a> {
+    items: Vec<&'a Item>,
+    value: Decimal,
+    weight: Decimal,
+}
 
-    for i in 1..(2u32.pow(n as u32)) {
-        let mut combination = vec![];
-        for j in 0..n {
-            if (i >> j) & 1 == 1 {
-                combination.push(items[j].clone());
-            }
+impl<'a> TempCombination<'a> {
+    fn new() -> Self {
+        Self {
+            items: Vec::new(),
+            value: Decimal::from_i32(0).expect("Cannot convert 0 to Decimal"),
+            weight: Decimal::from_i32(0).expect("Cannot convert 0 to Decimal"),
         }
-        combinations.push(combination);
     }
 
-    combinations
+    fn add_item(&mut self, item: &'a Item) {
+        self.items.push(item);
+        self.value += item.value;
+        self.weight += item.weight;
+    }
+}
+
+struct Tracker<'a> {
+    combination: TempCombination<'a>,
+    value: Decimal,
+    weight: Decimal,
+}
+
+impl<'a> Tracker<'a> {
+    fn new() -> Self {
+        Self {
+            combination: TempCombination::new(),
+            value: Decimal::from_i32(0).expect("Cannot convert 0 to Decimal"),
+            weight: Decimal::from_i32(0).expect("Cannot convert 0 to Decimal"),
+        }
+    }
+
+    fn set_new_best(&mut self, combination: TempCombination<'a>) {
+        self.combination = combination;
+        self.value = self.combination.value;
+        self.weight = self.combination.weight;
+    }
 }
 
 #[pyfunction]
 pub fn rs_brute_force(items: Vec<Item>, capacity: i32) -> PyResult<Combination> {
-    let dec_capacity = Decimal::from_i32(capacity).expect("Cannot convert capacity");
-    let all_combinations: Vec<Vec<Item>> = get_all_combinations(&items);
+    let decimal_capacity = Decimal::from_i32(capacity).expect("Cannot convert capacity from capacity");    
+    let mut tracker = Tracker::new();
+    let n = items.len();
 
-    let mut possible_solutions: Vec<(Vec<Item>, Decimal)> = vec![];
-    for combination in &all_combinations {
-        let weight: Decimal = combination.iter().map(|item| item.weight).sum();
-        if weight <= dec_capacity {
-            let value: Decimal = combination.iter().map(|item| item.value).sum();
-            possible_solutions.push((combination.clone(), value));
+    for i in 1..(2u32.pow(n as u32)) {
+
+        let mut combination = TempCombination::new();
+
+        for j in 0..n {
+
+            if (i >> j) & 1 == 1 {
+                let item = &items[j];
+                if combination.weight + item.weight > decimal_capacity {
+                    break;
+                }
+                combination.add_item(item);
+            }
+        }
+        
+        if combination.value > tracker.value {    
+            tracker.set_new_best(combination);
         }
     }
 
-    let best_solution: Option<(Vec<Item>, Decimal)> = possible_solutions
-        .into_iter()
-        .max_by(|a, b| a.1.partial_cmp(&b.1).unwrap_or(Ordering::Equal));
+    let selected_items = tracker.combination.items.into_iter().map(|item| item.clone()).collect();
 
-    let best_combination: Vec<Item> = if let Some((combination, _)) = best_solution {
-        combination
-    } else {
-        vec![]
-    };
-
-    Ok(Combination::new(best_combination))
+    Ok(Combination::new(selected_items))
 }

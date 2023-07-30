@@ -1,6 +1,19 @@
 from utils.profiling import perf_timer
 from models import Item, Combination, Algorithm
 
+
+class TempCombination:
+    def __init__(self):
+        self.items: list[Item] = []
+        self.value: int = 0
+        self.weight: int = 0
+
+    def add_item(self, item: Item) -> None:
+        self.items.append(item)
+        self.value += item.value
+        self.weight += item.weight
+
+
 class PyBruteForce(Algorithm):
     @property
     def name(self):
@@ -14,23 +27,22 @@ class PyBruteForce(Algorithm):
                 "Brute force solution can't be used with more than 20 items"
             )
 
+        best_combination = TempCombination() 
         n = len(items)
-        combinations = []
 
         for i in range(1, 2**n):
-            combination = {
-            "items": [],
-            "value": 0,
-            "weight": 0,
-        }
+            combination = TempCombination()
+            
             for j in range(n):
+                item = items[j]
+                
+                if combination.weight + item.weight > capacity:
+                        break
+
                 if ((i >> j) & 1) == 1:
-                    combination["items"].append(items[j])
-                    combination["value"] += items[j].value
-                    combination["weight"] += items[j].weight
-            if combination["weight"] <= capacity:
-                combinations.append(combination)
+                    combination.add_item(item)
+            
+            if combination.value > best_combination.value:
+                best_combination = combination
 
-        best_combination = max(combinations, key=lambda combination: combination["value"])
-
-        return Combination(best_combination["items"])
+        return Combination(best_combination.items)
