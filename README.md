@@ -37,7 +37,7 @@ You need to have Python >= 3.9 installed.
 ### Clone the project from Github
 
 ```bash
-git clone https://github.com/0ddbird/OC_Python_P7.git`
+git clone https://github.com/0ddbird/OC_Python_P7.git
 ```
 
 ### Create a new virtual environment
@@ -59,11 +59,11 @@ cd app/ ; pip install -r requirements.txt
 
 ### Optional: install Rust and build the knapsack_rs library
 
-Each of the project algorithms have also been implemented in Rust, and been made usable through Python as a single python dependency.
+Each of the project algorithms have also been implemented in Rust, and have been made usable through the application as an optional python dependency.
 
-If you want to use them, you need to have Rust installed on your computer, and build the `knapsack_rs` dependency.  
+If you want to use this dependency, you need to have Rust installed on your computer, and build the `knapsack_rs` library.  
 - To install Rust on your computer, follow the instructions from [https://doc.rust-lang.org](https://doc.rust-lang.org/book/ch01-01-installation.html)
-- Navigate to the `knapsack_rs/` directory and run
+- Then navigate to the `knapsack_rs/` directory and run
 
 ```bash
 maturin develop

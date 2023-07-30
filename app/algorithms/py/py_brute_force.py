@@ -18,8 +18,7 @@ class PyBruteForce(Algorithm):
     @property
     def name(self):
         return f"brute_force - {self.lang.name}"
-    
-    
+
     @perf_timer
     def compute(self, items: list[Item], capacity: int) -> Combination:
         if len(items) > 20:
@@ -27,21 +26,21 @@ class PyBruteForce(Algorithm):
                 "Brute force solution can't be used with more than 20 items"
             )
 
-        best_combination = TempCombination() 
+        best_combination = TempCombination()
         n = len(items)
 
         for i in range(1, 2**n):
             combination = TempCombination()
-            
+
             for j in range(n):
                 item = items[j]
-                
+
                 if combination.weight + item.weight > capacity:
-                        break
+                    break
 
                 if ((i >> j) & 1) == 1:
                     combination.add_item(item)
-            
+
             if combination.value > best_combination.value:
                 best_combination = combination
 

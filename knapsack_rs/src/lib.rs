@@ -2,11 +2,11 @@ use crate::models::{Combination, Item};
 use pyo3::prelude::*;
 
 mod brute_force;
+mod dp;
 mod greedy;
 mod item_factory;
 mod models;
 mod utils;
-mod dp;
 
 #[pymodule]
 fn knapsack_rs(_py: Python, m: &PyModule) -> PyResult<()> {

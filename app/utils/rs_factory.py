@@ -3,6 +3,7 @@ from models import AbstractItemFactory, LangChoice
 from knapsack_rs.knapsack_rs import Item
 from knapsack_rs.knapsack_rs import rs_get_coefficient, rs_build_items
 
+
 class RustItemFactory(AbstractItemFactory):
     def __init__(self, language: LangChoice, file_path: Path) -> None:
         super().__init__(language, file_path)

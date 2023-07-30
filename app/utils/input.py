@@ -11,6 +11,7 @@ from models import Algorithm, LangChoice
 def valid_args_count(args: list[str]) -> bool:
     return len(args) > 3
 
+
 def get_dataset_path(dataset_path_arg: str) -> Path:
     dataset_path = Path(f"../project_data/datasets/{dataset_path_arg}.csv")
     if not dataset_path.is_file():
@@ -77,36 +78,52 @@ def get_implementation(algo, lang_choice):
 
     return implementations[lang_choice][algo]
 
+
 def get_algorithm(algo_arg: str) -> str:
-    algo_choice_dict = {"--bf": "Brute Force", "--dp": "Dynamic Programming", "--gr": "Greedy"}
-    
+    algo_choice_dict = {
+        "--bf": "Brute Force",
+        "--dp": "Dynamic Programming",
+        "--gr": "Greedy",
+    }
+
     if algo_arg not in algo_choice_dict:
         print(f"{algo_arg} is not a valid choice\n" f"Choices: --bf | --dp | --gr")
         exit(1)
     return algo_choice_dict[algo_arg]
 
 
-
 def prompt_params() -> tuple[str, Path, int, Algorithm, bool]:
-    filename = questionary.select("Please enter the filename:", choices=["dataset0", "dataset1", "dataset2"]).ask()
+    filename = questionary.select(
+        "Please enter the filename:", choices=["dataset0", "dataset1", "dataset2"]
+    ).ask()
     path = get_dataset_path(filename)
-    
-    capacity = questionary.text("Please enter the capacity (0-500):", validate=lambda x: x.isdigit() and int(x) in range(0, 501)).ask()
+
+    capacity = questionary.text(
+        "Please enter the capacity (0-500):",
+        validate=lambda x: x.isdigit() and int(x) in range(0, 501),
+    ).ask()
     capacity = get_max_weight(capacity)
-    
-    algo = questionary.select("Choose an algorithm:", choices=['Brute Force', 'Dynamic Programming', 'Greedy']).ask()
-    
+
+    algo = questionary.select(
+        "Choose an algorithm:", choices=["Brute Force", "Dynamic Programming", "Greedy"]
+    ).ask()
+
     lang_choice_dict = {"Python": LangChoice.Python, "Rust": LangChoice.Rust}
-    lang_friendly = questionary.select("Choose a programming language:", choices=list(lang_choice_dict.keys())).ask()
+    lang_friendly = questionary.select(
+        "Choose a programming language:", choices=list(lang_choice_dict.keys())
+    ).ask()
     lang = lang_choice_dict[lang_friendly]
-    
+
     implementation = get_implementation(algo, lang)
-    
-    options = questionary.checkbox("Options:", choices=['Generate text output', 'Print to the console']).ask()
-    write = 'Generate text output' in options
-    log = 'Print to the console' in options
+
+    options = questionary.checkbox(
+        "Options:", choices=["Generate text output", "Print to the console"]
+    ).ask()
+    write = "Generate text output" in options
+    log = "Print to the console" in options
 
     return filename, path, capacity, lang, implementation, write, log
+
 
 def get_params() -> tuple[str, Path, int, Algorithm, bool]:
     valid_count = valid_args_count(sys.argv)
@@ -119,8 +136,6 @@ def get_params() -> tuple[str, Path, int, Algorithm, bool]:
         implementation = get_implementation(algo, lang)
         write, log = get_optional_flags(remaining)
     else:
-        print(
-            "Switching to interactive prompt since arguments are missing"
-        )
+        print("Switching to interactive prompt since arguments are missing")
         filename, path, capacity, lang, implementation, write, log = prompt_params()
     return filename, path, capacity, lang, implementation, write, log

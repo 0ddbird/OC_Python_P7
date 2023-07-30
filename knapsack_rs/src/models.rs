@@ -44,8 +44,7 @@ impl Item {
             .to_u64()
             .ok_or_else(|| PyErr::new::<PyTypeError, _>("Value out of range"))?;
 
-        let value: Decimal =
-            weight * rate / Decimal::from_u8(100).unwrap();
+        let value: Decimal = weight * rate / Decimal::from_u8(100).unwrap();
 
         let weighted_value: u64 = weighted_weight
             * weighted_rate
@@ -64,9 +63,11 @@ impl Item {
         })
     }
 
-
     fn __repr__(&self) -> PyResult<String> {
-        Ok(format!("Item(name={}, weight={}, value={})", self.name, self.weight, self.value))
+        Ok(format!(
+            "Item(name={}, weight={}, value={})",
+            self.name, self.weight, self.value
+        ))
     }
 
     fn __str__(&self) -> PyResult<String> {
@@ -83,10 +84,10 @@ impl Display for Item {
 impl Debug for Item {
     fn fmt(&self, f: &mut Formatter<'_>) -> Result {
         f.debug_struct("Item")
-         .field("name", &self.name)
-         .field("weight", &self.weight)
-         .field("value", &self.value)
-         .finish()
+            .field("name", &self.name)
+            .field("weight", &self.weight)
+            .field("value", &self.value)
+            .finish()
     }
 }
 

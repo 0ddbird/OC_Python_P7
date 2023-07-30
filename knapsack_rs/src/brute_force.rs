@@ -49,16 +49,15 @@ impl<'a> Tracker<'a> {
 
 #[pyfunction]
 pub fn rs_brute_force(items: Vec<Item>, capacity: i32) -> PyResult<Combination> {
-    let decimal_capacity = Decimal::from_i32(capacity).expect("Cannot convert capacity from capacity");    
+    let decimal_capacity =
+        Decimal::from_i32(capacity).expect("Cannot convert capacity from capacity");
     let mut tracker = Tracker::new();
     let n = items.len();
 
     for i in 1..(2u32.pow(n as u32)) {
-
         let mut combination = TempCombination::new();
 
         for j in 0..n {
-
             if (i >> j) & 1 == 1 {
                 let item = &items[j];
                 if combination.weight + item.weight > decimal_capacity {
@@ -67,13 +66,18 @@ pub fn rs_brute_force(items: Vec<Item>, capacity: i32) -> PyResult<Combination> 
                 combination.add_item(item);
             }
         }
-        
-        if combination.value > tracker.value {    
+
+        if combination.value > tracker.value {
             tracker.set_new_best(combination);
         }
     }
 
-    let selected_items = tracker.combination.items.into_iter().map(|item| item.clone()).collect();
+    let selected_items = tracker
+        .combination
+        .items
+        .into_iter()
+        .map(|item| item.clone())
+        .collect();
 
     Ok(Combination::new(selected_items))
 }
