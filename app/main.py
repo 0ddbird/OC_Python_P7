@@ -7,9 +7,10 @@ from utils.output import write_to_text, print_to_terminal
 
 getcontext().prec = 8
 
-
 def main():
+    
     filename, path, capacity, lang, algorithm, write, log = get_params()
+
     get_coefficient = False
 
     if lang == LangChoice.Python:

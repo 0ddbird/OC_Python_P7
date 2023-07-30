@@ -33,21 +33,53 @@ It is also required to provide a set of slides containing the following:
 ## 2. <a id="install">Installation</a>
 
 You need to have Python >= 3.9 installed.
-### 1. Clone the project from Github
+
+### Clone the project from Github
 
 ```bash
-git clone https://github.com/0ddbird/OC_Python_P7.git
+git clone https://github.com/0ddbird/OC_Python_P7.git`
 ```
 
-### <a id="step2">2.</a> Navigate to the `app` directory  
+### Create a new virtual environment
+
 ```bash
-`cd /app`
+python -m venv <name_of_the_venv>
 ```
 
-### 3. Run the script
-The command structure is :  
+### Activate the virtual environment
+
 ```bash
-python main.py <dataset_name> <max_capacity> <algorithm> <language> <optional_flags
+source <name_of_the_venv>/bin/activate
+```
+
+### Go to the `app/` directory  and install the requirements
+```bash
+cd app/ ; pip install -r requirements.txt
+```
+
+### Optional: install Rust and build the knapsack_rs library
+
+Each of the project algorithms have also been implemented in Rust, and been made usable through Python as a single python dependency.
+
+If you want to use them, you need to have Rust installed on your computer, and build the `knapsack_rs` dependency.  
+- To install Rust on your computer, follow the instructions from [https://doc.rust-lang.org](https://doc.rust-lang.org/book/ch01-01-installation.html)
+- Navigate to the `knapsack_rs/` directory and run
+
+```bash
+maturin develop
+```
+This will compile the Rust library and add it as a python dependency in the current virtual environment.
+
+### 6. Run the script
+
+To be guided by the interactive prompt, run:  
+```bash
+python -m main
+```
+
+To pass arguments via the CLI, run :  
+```bash
+python main.py <dataset_name> <max_capacity> <algorithm> <language> <optional_flags>
 ```
 
 #### Parameters
@@ -56,17 +88,17 @@ python main.py <dataset_name> <max_capacity> <algorithm> <language> <optional_fl
 **max_capacity**: must be a positive integer (the knapsack capacity)  
 
 **algorithm**: three possible choices:
-- --bf: a brute force algorithm that generates all possible combinations from the given items, and >return the one with the best value within the constraint of `max_capacity`.
-- --gr: a greedy algorithm that sorts all items by value (descending)
-- --dp: a dynamic programming algorithm  
+- **--bf**: a brute force algorithm that generates all possible combinations from the given items, and return the one with the best value within the constraint of `max_capacity`.
+- **--gr**: a greedy algorithm that sorts all items by value (descending)
+- **--dp**: a dynamic programming algorithm  
 
-**<language**: two choices Python or Rust.
-- --py will run the Python version of the chosen algorithm
+**language**: two choices Python or Rust.
+- -**-py** will run the Python version of the chosen algorithm
 - --rs will run the Rust version of the chosen algorithm
 
-**-p (optional)**: enables verbose mode to print the result to the console  
+**-p** (optional): enables verbose mode to print the result to the console  
 
-**-w (optional)**: if enabled, will write the results to `project_data/results/` as a text file. 
+**-w** (optional): if enabled, will write the results to `project_data/results/` as a text file. 
 
 
 ### Examples
@@ -74,54 +106,6 @@ python main.py <dataset_name> <max_capacity> <algorithm> <language> <optional_fl
 `python main.py dataset0 500 --bf --py -p`  
 `python main.py dataset1 500 --gr --py -w`  
 `python main.py dataset2 500 --dp --rs -p -w`  
-
-## Optional : Rust version
-
-You need to have Rust installed on your computer to build the `knapsack_rs` python dependency. 
-You can follow the installation instructions from [https://doc.rust-lang.org](https://doc.rust-lang.org/book/ch01-01-installation.html)
-
-### 1. Clone the project from Github
-
-```bash
-git clone https://github.com/0ddbird/OC_Python_P7.git`
-```
-
-### 2. Go to the `app/` directory  
-
-### 2. Create a new virtual environment
-
-```bash
-python -m venv <name_of_the_venv>
-```
-
-### 3. Activate the virtual environment
-
-```bash
-source <name_of_the_venv>/bin/activate
-```
-
-### 4. Install the requirements
-
-```bash
-pip install -r requirements.txt
-```
-
-Alternatively, since there is only one package required, you can simply run  
-
-```bash
-pip install maturin`
-```
-
-
-### 5. Navigate to the `knapsack_rs/` directory and run
-
-```bash
-maturin develop
-```
-
-This will compile the binary for your platform and install it as a python dependency in your virtual environment.
-
-### 6. [Go to Python Installation step #2](#step2)
 
 
 [:arrow_up_small: Back to top](#index)
