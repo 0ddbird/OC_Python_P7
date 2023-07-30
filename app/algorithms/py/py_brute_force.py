@@ -38,8 +38,10 @@ class PyBruteForce(Algorithm):
                 if combination.weight + item.weight > capacity:
                     break
 
-                if ((i >> j) & 1) == 1:
-                    combination.add_item(item)
+                if ((i >> j) & 1) == 0:
+                    continue
+
+                combination.add_item(item)
 
             if combination.value > best_combination.value:
                 best_combination = combination

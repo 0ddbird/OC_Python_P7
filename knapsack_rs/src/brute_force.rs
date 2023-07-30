@@ -58,13 +58,17 @@ pub fn rs_brute_force(items: Vec<Item>, capacity: i32) -> PyResult<Combination> 
         let mut combination = TempCombination::new();
 
         for j in 0..n {
-            if (i >> j) & 1 == 1 {
-                let item = &items[j];
-                if combination.weight + item.weight > decimal_capacity {
-                    break;
-                }
-                combination.add_item(item);
+            let item = &items[j];
+
+            if combination.weight + item.weight > decimal_capacity {
+                break;
             }
+
+            if (i >> j) & 1 == 0 {
+                continue;
+            }
+
+            combination.add_item(item);
         }
 
         if combination.value > tracker.value {
